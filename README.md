@@ -1,6 +1,6 @@
 # ETAparments
 
-> Find apartments based on time-to-travel to destinations important to you
+> Find apartments based on time-to-travel to destinations important to you!!!
 
 ## Team
 
