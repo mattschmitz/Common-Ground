@@ -120,10 +120,10 @@ Thanks for contributing!
 ### Guidelines
 
 1. Uphold the current code standard:
-    - Keep your code [DRY]["Don't repeat yourself."].
-    - Apply the [boy scout rule]["Always leave the campground cleaner than you found it."].
+    - Keep your code DRY: "Don't Repeat Yourself."
+    - Apply the coder's Boy Scout Rule: "Always leave the code cleaner than you found it."
     - Follow [STYLE-GUIDE.md](STYLE-GUIDE.md)
-1. Run the [tests][] before submitting a pull request.
+1. Run the tests before submitting a pull request.
 1. Tests are very, very important. Submit tests if your pull request contains
    new, testable behavior.
 
@@ -141,8 +141,7 @@ This is just to help you organize your process
 - [ ] Did I get a code review?
   - [ ] Did I make any requested changes from that code review?
 
-If you follow all of these guidelines and make good changes, you should have
-no problem getting your changes merged in.
+If you follow all of these guidelines and make good changes, you should have no problem getting your changes merged in.
 
 
 <!-- Links -->
