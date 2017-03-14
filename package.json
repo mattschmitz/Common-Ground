@@ -1,0 +1,24 @@
+{
+  "name": "genial-giraffes",
+  "version": "1.0.0",
+  "description": "Find apartments based on time-to-travel to destinations important to you",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/justinjyoo/genial-giraffes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/justinjyoo/genial-giraffes/issues"
+  },
+  "homepage": "https://github.com/justinjyoo/genial-giraffes#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
