@@ -1,10 +1,12 @@
 var express = require('express')
+// Added to serve static files
 var path = require('path')
 var app = express()
 var yelp = require('../yelpHelper')
 
 var port = process.env.PORT || 8080;
 
+// Added to serve static files out of htmlTemplates
 app.use(express.static(path.join(__dirname, '../htmlTemplates')));
 
 app.get('/', function (req, res) {
@@ -26,7 +28,7 @@ app.get('/yelp', function (req, res) {
 
 app.get('/map', function(req, res) {
   res.send('../htmlTemplates/map.html');
-})
+});
 
 app.listen(port, function () {
   console.log('Example app listening on port ' + port + '!')
