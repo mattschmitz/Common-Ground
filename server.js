@@ -5,7 +5,7 @@ var yelp = require('../yelpHelper')
 
 var port = process.env.PORT || 8080;
 
-app.use(express.static(path.join(__dirname)))
+app.use(express.static(path.join(__dirname, '../htmlTemplates')));
 
 app.get('/', function (req, res) {
   res.send('Hello Matt The Man!')
@@ -21,6 +21,11 @@ app.get('/yelp', function (req, res) {
       }, function(data) {
     res.send(data);
   });
+
+});
+
+app.get('/map', function(req, res) {
+  res.send('../htmlTemplates/map.html');
 })
 
 app.listen(port, function () {
