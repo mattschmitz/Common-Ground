@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/justinjyoo/genial-giraffes#readme",
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "angular": "^1.6.3"
   },
   "engines": {
     "node": "6.10.0"
