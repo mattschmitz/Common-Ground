@@ -3,13 +3,30 @@
 <head>
   <title>ETAparments</title>
   <script src="/node_modules/angular/angular.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/client/stylesheets/map.css">
 </head>
 <body ng-app="etapartments">
   <app></app>
+  <div id="test"></div>
   <script src="/client/components/index.js"></script>
   <script src="/client/components/app.js"></script>
   <script src="/client/components/userNav.js"></script>
   <script src="/client/components/anchorBar.js"></script>
   <script src="/client/components/queryBar.js"></script>
+  <script src="/client/components/map.js"></script>
+  <script text="text/javascript" src="/server/gmaps.js"></script>
+  <script text="text/javascript" src="/config/API_INFO.js"></script>
 </body>
+  <script>
+  function initialize() {
+    var key = gmaps_key;
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
+    s.setAttribute('async', '');
+    s.setAttribute('defer', '');
+    document.getElementsByTagName('body')[0].appendChild(s);
+  }
+  window.onload = initialize();
+  </script>
 </html>

@@ -5,8 +5,8 @@ html, body {
   padding: 0;
 }
 
-#map {
-  height: 70%;
+#mapWindow {
+  height: 400px;
   width: 50%;
 }
 
