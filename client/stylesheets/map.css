@@ -7,7 +7,9 @@ html, body {
 
 #mapWindow {
   height: 400px;
-  width: 50%;
+  width: 70%;
+  display: inline-block;
+  float: left;
 }
 
 .infoWindow {
@@ -30,3 +32,9 @@ html, body {
 }
 
 /* Temporary CSS to test map display */
+
+/* Temporary CSS to test results list */
+
+#resultsListContainer {
+  display: inline-block;
+}
