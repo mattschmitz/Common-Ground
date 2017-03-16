@@ -21,9 +21,9 @@ app.get('/directions', function(req, res){
 
   //get with dummy data
   gDirections.getDirections({
-    origin: '944 Market St, San Francisco, CA 94102',
-    destination: '25 Pearl St, San Francisco, CA 94103', 
-    mode: 'transit'
+    origin: '75 9th Ave, New York, NY',
+    destination: 'MetLife Stadium Dr East Rutherford, NJ 07073', 
+    mode: 'driving'
   }, function(data){
     res.send(data);
   })
