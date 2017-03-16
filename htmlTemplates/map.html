@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="map.css">
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+    <script text="text/javascript" src="/server/gmaps.js"></script>
+    <script text="text/javascript" src="/config/API_INFO.js"></script>
+    <script>
+      var key = gmaps_key;
+      var s = document.createElement("script");
+      s.type = "text/javascript";
+      s.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
+      s.setAttribute('async', '');
+      s.setAttribute('defer', '');
+      document.getElementsByTagName('body')[0].appendChild(s);
+    </script>
+</html>

@@ -1,0 +1,32 @@
+/* Temporary CSS to test map display */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  height: 70%;
+  width: 50%;
+}
+
+.infoWindow {
+  display: inline;
+}
+
+.infoWindowBlock {
+  display: inline-block;
+  margin: 4px 4px 4px 0;
+}
+
+.infoWindowImg {
+  float: left;
+  margin: 0 10px 10px 0;
+  height: 100px;
+}
+
+.infoWindowLabel {
+  font-weight: 800;
+}
+
+/* Temporary CSS to test map display */
