@@ -8,12 +8,13 @@ var gDirections = require('./gDirections')
 var port = process.env.PORT || 8080;
 
 // Added to serve static files out of htmlTemplates
+app.use('/', express.static(path.join(__dirname)));
 app.use('/htmlTemplates', express.static(path.join(__dirname, '/htmlTemplates')));
 app.use('/server', express.static(path.join(__dirname, '/server')));
 app.use('/config', express.static(path.join(__dirname, '/config')));
 
 app.get('/', function (req, res) {
-  res.send('Hello Matt The Man!')
+  res.redirect('index.html')
 })
 
 app.get('/directions', function(req, res){
@@ -42,7 +43,7 @@ app.get('/yelp', function (req, res) {
 });
 
 app.get('/map', function(req, res) {
-  res.send('../htmlTemplates/map.html');
+  res.redirect('./htmlTemplates/map.html');
 });
 
 app.listen(port, function () {
