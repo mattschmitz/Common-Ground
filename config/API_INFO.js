@@ -1,1 +1,0 @@
-var gmaps_key = 'AIzaSyCrrF_JAPp0HljxaSSiJofc7g6zfr-WJSI';

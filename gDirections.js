@@ -1,7 +1,7 @@
-var api_keys = require('./api_keys');
+var keys = require('./config/API_KEYS');
 
 var googleMapsClient = require('@google/maps').createClient({
-  key: api_keys.directionsApiKey
+  key: keys.G_DIRECTIONS_KEY
 });
 
 exports.getDirections = function(params, cb){
