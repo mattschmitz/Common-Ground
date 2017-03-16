@@ -7,7 +7,10 @@ var yelp = require('../yelpHelper')
 var port = process.env.PORT || 8080;
 
 // Added to serve static files out of htmlTemplates
-app.use(express.static(path.join(__dirname, '../htmlTemplates')));
+// app.use(express.static(path.join(__dirname, '../htmlTemplates')));
+app.use('/htmlTemplates', express.static(path.join(__dirname, '../htmlTemplates')));
+app.use('/server', express.static(path.join(__dirname, '../server')));
+app.use('/config', express.static(path.join(__dirname, '../config')));
 
 app.get('/', function (req, res) {
   res.send('Hello Matt The Man!')

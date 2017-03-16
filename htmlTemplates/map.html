@@ -20,8 +20,16 @@
   </head>
   <body>
     <div id="map"></div>
-    <script text="text/javascript" src="gmaps.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrrF_JAPp0HljxaSSiJofc7g6zfr-WJSI&callback=initMap"
-    async defer></script>
   </body>
+    <script text="text/javascript" src="/server/gmaps.js"></script>
+    <script text="text/javascript" src="/config/API_INFO.js"></script>
+    <script>
+      var key = gmaps_key;
+      var s = document.createElement("script");
+      s.type = "text/javascript";
+      s.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
+      s.setAttribute('async', '');
+      s.setAttribute('defer', '');
+      document.getElementsByTagName('body')[0].appendChild(s);
+    </script>
 </html>
