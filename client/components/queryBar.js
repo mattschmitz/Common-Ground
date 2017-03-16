@@ -1,9 +1,4 @@
 angular.module('etapartments')
-
-.directive('queryBar', function() {
-	return {
-		restrict: 'E',
-		scope: {},	
+.component('queryBar', {
 		templateUrl: 'client/htmlTemplates/queryBar.html'
-	};
 });
