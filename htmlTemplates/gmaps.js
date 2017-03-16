@@ -27,7 +27,7 @@ addPoints(map, points);
 }
 
 // addPoints takes an array of objects
-// Each object should have a lat, lng, and an optional title property
+// Each object is anticipated to be in the format that Yelp's API returns objects in
 
 var addPoints = function (map, locations){
   var marker, i
