@@ -5,19 +5,17 @@
 
 //example: findCentroid([[0,0],[0,2],[2,2],[2,0]]) //=> [1,1]
 
-var findCentroid = function([coords]){
-  var numCords = coords.length();
+var findCentroid = function(coords){
+  var numCords = coords.length;
 
-  var sumX = 0;
-  var sumY = 0;
-
-  for var(i = 0; i < numCords; i++) {
-    sumX += coords[i][0];
-    sumY += coords[0][i];
+  var sumLats = 0, sumLongs = 0;
+  for (var i = 0; i < numCords; i++) {
+    sumLats += coords[i][0];
+    sumLongs += coords[i][1];
   } 
 
-  var avgX = sumX/numCords;
-  var avgY = sumY/numCords;
+  var avgLat = sumLats/numCords;
+  var avgLong = sumLongs/numCords;
 
-  return [avgX, avgY];
-}
+  return [avgLat, avgLong];
+};
