@@ -29,6 +29,17 @@ app.get('/directions', function(req, res){
   })
 })
 
+app.get('/times', function(req, res){
+  //get with dummy data
+  gDirections.getTravelTimes({
+    origins: '944 Market St, San Francisco, CA 94102',
+    destinations: '25 Pearl St, San Francisco, CA 94103|565 Grove St, San Francisco, CA 94102', 
+    mode: 'driving'
+  }, function(data){
+    res.send(data);
+  })
+})
+
 app.get('/yelp', function (req, res) {
 
   //fetch with dummy data
