@@ -2,7 +2,8 @@ var express = require('express')
 // Added to serve static files
 var path = require('path')
 var app = express()
-var yelp = require('../yelpHelper')
+var yelp = require('./yelpHelper')
+var gDirections = require('./gDirections')
 
 var port = process.env.PORT || 8080;
 
@@ -13,6 +14,18 @@ app.use('/config', express.static(path.join(__dirname, '/config')));
 
 app.get('/', function (req, res) {
   res.send('Hello Matt The Man!')
+})
+
+app.get('/directions', function(req, res){
+
+  //get with dummy data
+  gDirections.getDirections({
+    origin: '75 9th Ave, New York, NY',
+    destination: 'MetLife Stadium Dr East Rutherford, NJ 07073', 
+    mode: 'driving'
+  }, function(data){
+    res.send(data);
+  })
 })
 
 app.get('/yelp', function (req, res) {
