@@ -1,7 +1,4 @@
 angular.module('etapartments')
-
-.directive('userNav', function() {
-	return {
-		templateUrl: 'client/htmlTemplates/userNav.html'
-	}
+.component('userNav', {
+	templateUrl: 'client/htmlTemplates/userNav.html'
 })
