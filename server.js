@@ -40,8 +40,15 @@ app.get('/times', function(req, res){
   })
 })
 
-app.get('/yelp', function (req, res) {
+app.get('/geocode', function(req, res){
+  gDirections.geocode({
+    address: '944 Market St, San Francisco, CA 94102'
+  }, function(data){
+    res.send(data);
+  })
+})
 
+app.get('/yelp', function (req, res) {
   //fetch with dummy data
   yelp.fetchBusinesses({
         "latitude": 37.7776799,
