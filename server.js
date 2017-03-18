@@ -48,15 +48,31 @@ app.get('/geocode', function(req, res){
   })
 })
 
-app.get('/yelp', function (req, res) {
-  //fetch with dummy data
-  yelp.fetchBusinesses({
-        "latitude": 37.7776799,
-        "longitude": -122.40709,
-        "radius": 1000
+app.get('/query', function (req, res) {
+  //get with dummy data
+  console.log(req.query);
+
+  yelp.getBusinesses({
+        "term": req.query.search_term,
+        "price": req.query.price,
+        "open_now": req.query.open_now
       }, function(data) {
     res.send(data);
   });
+
+});
+
+app.get('/anchor', function(req, res) {
+  var address = req.query.anchor_address + ',' + req.query.anchor_city + ',' + req.query.anchor_state + ' ' + req.query.anchor_zip;
+  var anchor = {
+    name: req.query.anchor_name,
+    address: address
+  };
+
+  gDirections.geocode({address: address}, function(coords) {
+    yelp.setSearchArea(anchor, coords);
+    res.send(coords);
+  })
 
 });
 
