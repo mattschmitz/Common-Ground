@@ -4,29 +4,28 @@
     <div class="queryBar">
       <form action="/query">
         <fieldset>
-          <legend>Price</legend>
-          <label for="query_min">Min Price:</label>
-          <input class="inputText" type="text" name="query_min" size="6" placeholder="0"/>
-          <label for="query_max">Max Price:</label>
-          <input class="inputText" type="text" name="query_max" size="6" placeholder="0"/>
-        </fieldset>
-        <fieldset>
-          <legend>Beds/Baths</legend>
-          <label for="numBeds"># of beds:</label>
-          <select name="numBeds">
-            <option value="0">0</option>
-            <option value="1+">1+</option>
-            <option value="2+">2+</option>
-            <option value="3+">3+</option>
-            <option value="4+">4+</option>
+        <legend>Find Common Ground</legend>
+        <label for="search_term">Search for:</label>
+          <input class="inputText" type="text" name="search_term" placeholder="Restaurants, bars, food...">
+          <label for="price">Price:</label>
+          <select name="price">
+            <option value = '$'>$</option>
+            <option value = '$$'>$$</option>
+            <option value = '$$$'>$$$</option>
+            <option value = '$$$$'>$$$$</option>
           </select>
-          <label for="numBaths"># of baths:</label>
-          <select name="numBaths">
-            <option value="1+">1+</option>
-            <option value="2+">2+</option>
-            <option value="3+">3+</option>
+          <label for="rating">Rating:</label>
+          <select name="rating">
+            <option value = 1>1 star</option>
+            <option value = 2>2 stars</option>
+            <option value = 3>3 stars</option>
+            <option value = 4>4 stars</option>
+            <option value = 5>5 stars</option>
           </select>
+          <label for="open_now">Open now</label>
+          <input type="checkbox" name="open_now">
         </fieldset>
+        
         <fieldset>
           <legend>Travel Options</legend>
           <label for="travel_mode">Travel Mode:</label>
