@@ -12,7 +12,7 @@ angular.module('etapartments')
   }
 })
 
-.controller('MapCtrl', function($scope, $window) {
+.controller('MapCtrl', function($scope, $window, $timeout) {
 
   var single = [{
     "name": "Deli Board",
@@ -65,57 +65,59 @@ angular.module('etapartments')
 
   var lastWindow;
 
-  $scope.map = new $window.google.maps.Map(document.getElementById('mapWindow'), {
-    center: options.start,
-    minZoom: options.minZoom,
-    maxZoom: options.maxZoom,
-    zoom: options.zoom
-  })
+  $timeout(function() {
+    $scope.map = new $window.google.maps.Map(document.getElementById('mapWindow'), {
+      center: options.start,
+      minZoom: options.minZoom,
+      maxZoom: options.maxZoom,
+      zoom: options.zoom
+    })
 
-  var addPoints = function (map, locations){
-    var marker, i
-    // Loop through all locations
-    for (i = 0; i < locations.length; i++) {  
-      // Create a new marker object
-      var marker = new $window.google.maps.Marker({
-        // marker.map sets which map to set marker on
-        // marker.position takes an object with lat, lng properties  
-        map: map, position: {lat: locations[i].coordinates.latitude, lng: locations[i].coordinates.longitude} 
-      });
-      // content is the HTML we want to render inside the infowindow
-      console.log(locations[i]);
-      var content = '<div class="infoWindow"><p><a class="infoWindowLink" href="' + locations[i].url + '" target="_blank"><h2>' + locations[i].name + '</h2></a></p><img class="infoWindowImg" src="' + locations[i].image_url + '"><div class="infoWindowBlock"><span class="infoWindowLabel">Address:</span> ' + locations[i].location.display_address[0] + '<br>' + locations[i].location.display_address[1] + '</div><br><div class="infoWindowBlock"><span class="infoWindowLabel">Phone:</span> ' + locations[i].display_phone + '</div></div>'
+    var addPoints = function (map, locations){
+      var marker, i
+      // Loop through all locations
+      for (i = 0; i < locations.length; i++) {  
+        // Create a new marker object
+        var marker = new $window.google.maps.Marker({
+          // marker.map sets which map to set marker on
+          // marker.position takes an object with lat, lng properties  
+          map: map, position: {lat: locations[i].coordinates.latitude, lng: locations[i].coordinates.longitude} 
+        });
+        // content is the HTML we want to render inside the infowindow
+        console.log(locations[i]);
+        var content = '<div class="infoWindow"><p><a class="infoWindowLink" href="' + locations[i].url + '" target="_blank"><h2>' + locations[i].name + '</h2></a></p><img class="infoWindowImg" src="' + locations[i].image_url + '"><div class="infoWindowBlock"><span class="infoWindowLabel">Address:</span> ' + locations[i].location.display_address[0] + '<br>' + locations[i].location.display_address[1] + '</div><br><div class="infoWindowBlock"><span class="infoWindowLabel">Phone:</span> ' + locations[i].display_phone + '</div></div>'
 
-      // Create InfoWindow object   
-      var infowindow = new $window.google.maps.InfoWindow();
+        // Create InfoWindow object   
+        var infowindow = new $window.google.maps.InfoWindow();
 
-      // Add an event listener to listen for a click on a marker
-      // Uses closure to retain access to individual content
-      google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
-        return function() {
-        // Close the previous infowindow
-        closeInfos();
-        // Set the contents of infowindow to our HTML content
-        infowindow.setContent(content);
-        // Display the infowindow for clicked marker
-        infowindow.open(map,marker);
-        // Keep the marker to close it on next click event
-        lastWindow = infowindow;
-        };
-      })(marker, content, infowindow));
+        // Add an event listener to listen for a click on a marker
+        // Uses closure to retain access to individual content
+        $window.google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+          return function() {
+          // Close the previous infowindow
+          closeInfos();
+          // Set the contents of infowindow to our HTML content
+          infowindow.setContent(content);
+          // Display the infowindow for clicked marker
+          infowindow.open(map,marker);
+          // Keep the marker to close it on next click event
+          lastWindow = infowindow;
+          };
+        })(marker, content, infowindow));
+      }
     }
-  }
 
-  var closeInfos = function (){
-     if(lastWindow){
-        // Detach the infowindow from the marker
-        lastWindow.set("marker", null);
-        // Close the marker
-        lastWindow.close();
-        // Reset infos
-        lastWindow = null;
-     }
-  }
-  
-  addPoints($scope.map, single);
+    var closeInfos = function (){
+       if(lastWindow){
+          // Detach the infowindow from the marker
+          lastWindow.set("marker", null);
+          // Close the marker
+          lastWindow.close();
+          // Reset infos
+          lastWindow = null;
+       }
+    }
+    console.log($scope);
+    addPoints($scope.map, single);
+  }, 100);
 })
