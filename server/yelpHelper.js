@@ -4,7 +4,7 @@ var utils = require('../utils/utils.js');
 var _ = require('underscore');
 
 var radius = 1000;
-var centroid;
+var centroid = [37.7836966, -122.4089664];
 var anchors = [];
 var coordinates = [];
 
