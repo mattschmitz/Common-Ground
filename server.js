@@ -2,7 +2,7 @@ var express = require('express')
 // Added to serve static files
 var path = require('path')
 var app = express()
-var yelp = require('./yelpHelper')
+var yelp = require('./server/yelpHelper')
 var gDirections = require('./gDirections')
 
 var port = process.env.PORT || 8080;
