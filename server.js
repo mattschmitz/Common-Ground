@@ -48,7 +48,7 @@ app.get('/geocode', function(req, res){
   })
 })
 
-app.get('/query', function (req, res) {
+app.get('/yelp', function (req, res) {
   //get with dummy data
   console.log(req.query);
 
