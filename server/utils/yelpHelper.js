@@ -1,6 +1,6 @@
 var request = require('request');
-var keys = require('../config/API_KEYS');
-var utils = require('../utils/utils.js');
+var keys = require('../../config/API_KEYS');
+var utils = require('./utils.js');
 var _ = require('underscore');
 
 var radius = 1000;
