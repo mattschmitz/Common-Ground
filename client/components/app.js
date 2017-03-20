@@ -9,9 +9,9 @@ angular.module('etapartments')
 	}
 })
 
-.controller('AppCtrl', function($scope, $window, yelp) {
+.controller('AppCtrl', function($scope, $window, search) {
   this.list = [];
-  yelp.search(function(data) {
+  search.query(function(data) {
     this.list = data;
   }.bind(this));
 })
