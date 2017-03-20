@@ -24,7 +24,7 @@ angular.module('etapartments')
   var lastWindow;
 
   // Wait for the Google Maps API call to finish before trying to instantiate the maps object
-  $scope.$watch('$window.google.maps', function() {
+  $timeout(function() {
     $scope.map = new $window.google.maps.Map(document.getElementById('mapWindow'), {
       center: options.start,
       minZoom: options.minZoom,
@@ -80,5 +80,5 @@ angular.module('etapartments')
     $scope.$watch('gmap.results', function() {
       addPoints($scope.map, $scope.gmap.results);
     });
-  });
+  }, 100);
 })
