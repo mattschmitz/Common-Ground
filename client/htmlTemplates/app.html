@@ -6,10 +6,10 @@
 		<anchor-bar></anchor-bar>
 	</div>
 	<div id="queryBar">
-		<query-bar></query-bar>
+		<query-bar getresults="app.getYelpResults"></query-bar>
 	</div>
   <div id="mapWindow">
-    <map-display results="app.list"></map-display>
+    <map-display results="app.list" center="app.center"></map-display>
   </div>
   <div id="resultsListContainer">
     <results-list results="app.list"></results-list>

@@ -2,7 +2,7 @@
 <html>
   <body>
     <div class="queryBar">
-      <form action="/yelp">
+      <form>
         <fieldset>
         <legend>Find Common Ground</legend>
         <label for="search_term">Search for:</label>
@@ -38,7 +38,7 @@
           <label for="travel_time">Max Travel Time:</label>
           <input class="inputText" type="number" min="0" placeholder="0" name="travel_time">
         </fieldset>
-        <button class="submitQuery" type="submit">Find Apartments!</button> 
+        <button type="button" class="submitQuery" ng-click="query.getresults()">Find Places!</button> 
         </form>
     </div>
   </body>

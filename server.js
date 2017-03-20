@@ -22,8 +22,8 @@ app.get('/anchor', function(req, res) {
   };
   gHelpers.geocode({address: address}, function(coords) {
     yelp.setSearchArea(anchor, coords);
-    res.send(coords);
-  });
+    res.sendStatus(204);
+  })
 });
 
 //get results of search

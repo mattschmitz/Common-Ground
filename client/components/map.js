@@ -3,7 +3,8 @@ angular.module('etapartments')
   
   return {
     scope: {
-      results: '<'
+      results: '<',
+      center: '<'
     },
     controllerAs: 'gmap',
     bindToController: true,
@@ -22,6 +23,7 @@ angular.module('etapartments')
   }
 
   var lastWindow;
+  var markers = [];
 
   // Wait for the Google Maps API call to finish before trying to instantiate the maps object
   $timeout(function() {
@@ -42,6 +44,10 @@ angular.module('etapartments')
           // marker.position takes an object with lat, lng properties  
           map: map, position: {lat: locations[i].coordinates.latitude, lng: locations[i].coordinates.longitude} 
         });
+
+        // Store marker in markers array for later retrieval
+        markers.push(marker);
+
         // content is the HTML we want to render inside the infowindow
         var content = '<div class="infoWindow"><p><a class="infoWindowLink" href="' + locations[i].url + '" target="_blank"><h2>' + locations[i].name + '</h2></a></p><img class="infoWindowImg" src="' + locations[i].image_url + '"><div class="infoWindowBlock"><span class="infoWindowLabel">Address:</span> ' + locations[i].location.display_address[0] + '<br>' + locations[i].location.display_address[1] + '</div><br><div class="infoWindowBlock"><span class="infoWindowLabel">Phone:</span> ' + locations[i].display_phone + '</div></div>'
 
@@ -63,7 +69,7 @@ angular.module('etapartments')
           };
         })(marker, content, infowindow));
       }
-    }
+    };
 
     var closeInfos = function (){
        if(lastWindow){
@@ -76,9 +82,28 @@ angular.module('etapartments')
        }
     }
 
+    var deleteMarkers = function(markers) {
+      // Go through each marker in markers array
+      for (var i = 0; i < markers.length; i++) {
+        // Unlink marker from map
+        markers[i].setMap(null);
+      }
+      // Then clear markers array
+      markers = [];
+    };
+
     // Wait for Yelp to return results which will trigger addPoints()
     $scope.$watch('gmap.results', function() {
+      // If markers length > 0
+      if (markers.length > 0) {
+        // We need to delete markers
+        deleteMarkers(markers);
+        // Then recenter map accordingly
+        $scope.map.setCenter($scope.gmap.center)
+      }
+      // Then add new points
       addPoints($scope.map, $scope.gmap.results);
-    });
+    }, true);
+
   }, 100);
 })
