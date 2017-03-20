@@ -12,11 +12,9 @@
   <script src="/client/components/userNav.js"></script>
   <script src="/client/components/anchorBar.js"></script>
   <script src="/client/components/queryBar.js"></script>
-  <script src="/client/components/map.js"></script>
   <script src="/client/components/resultslist.js"></script>
   <script src="/client/components/resultsentry.js"></script>
   <script src="/client/services/requester.js"></script>
-  <script src="/server/gmaps.js"></script>
   <script src="/config/G_MAPS_KEY.js"></script>
 </body>
   <script>
@@ -24,11 +22,12 @@
     var key = gMapsKey;
     var s = document.createElement("script");
     s.type = "text/javascript";
-    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMap';
+    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + key;
     s.setAttribute('async', '');
     s.setAttribute('defer', '');
     document.getElementsByTagName('body')[0].appendChild(s);
   }
   window.onload = initialize();
   </script>
+  <script src="/client/components/map.js"></script>
 </html>
