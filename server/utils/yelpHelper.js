@@ -46,5 +46,3 @@ request(options, function (error, response, body) {
 
 module.exports.getBusinesses = getBusinesses;
 module.exports.setSearchArea = setSearchArea;
-//export setAnchor
-//export setRadius

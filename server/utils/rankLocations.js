@@ -1,6 +1,5 @@
 /*
 
-
 INPUT: array of yelp bizes, array of anchors
 
   get travel times for each anchor to each busines - store in array
