@@ -1,4 +1,4 @@
-var keys = require('./config/API_KEYS');
+var keys = require('../config/API_KEYS');
 var _ = require('underscore');
 
 var googleMapsClient = require('@google/maps').createClient({
