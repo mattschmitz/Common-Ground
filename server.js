@@ -3,7 +3,7 @@ var express = require('express')
 var path = require('path')
 var app = express()
 var yelp = require('./server/yelpHelper')
-var gDirections = require('./gDirections')
+var gHelpers = require('./server/gHelpers')
 
 var port = process.env.PORT || 8080;
 
@@ -20,7 +20,7 @@ app.get('/', function (req, res) {
 app.get('/directions', function(req, res){
 
   //get with dummy data
-  gDirections.getDirections({
+  gHelpers.getDirections({
     origin: '944 Market St, San Francisco, CA 94102',
     destination: '25 Pearl St, San Francisco, CA 94103', 
     mode: 'transit'
@@ -31,7 +31,7 @@ app.get('/directions', function(req, res){
 
 app.get('/times', function(req, res){
   //get with dummy data
-  gDirections.getTravelTimes({
+  gHelpers.getTravelTimes({
     origins: '944 Market St, San Francisco, CA 94102',
     destinations: '25 Pearl St, San Francisco, CA 94103|565 Grove St, San Francisco, CA 94102', 
     mode: 'driving'
@@ -41,7 +41,7 @@ app.get('/times', function(req, res){
 })
 
 app.get('/geocode', function(req, res){
-  gDirections.geocode({
+  gHelpers.geocode({
     address: '944 Market St, San Francisco, CA 94102'
   }, function(data){
     res.send(data);
@@ -69,7 +69,7 @@ app.get('/anchor', function(req, res) {
     address: address
   };
 
-  gDirections.geocode({address: address}, function(coords) {
+  gHelpers.geocode({address: address}, function(coords) {
     yelp.setSearchArea(anchor, coords);
     res.send(coords);
   })
