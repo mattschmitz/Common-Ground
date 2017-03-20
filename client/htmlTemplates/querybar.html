@@ -2,17 +2,17 @@
 <html>
   <body>
     <div class="queryBar">
-      <form action="/query">
+      <form action="/yelp">
         <fieldset>
         <legend>Find Common Ground</legend>
         <label for="search_term">Search for:</label>
           <input class="inputText" type="text" name="search_term" placeholder="Restaurants, bars, food...">
           <label for="price">Price:</label>
           <select name="price">
-            <option value = '$'>$</option>
-            <option value = '$$'>$$</option>
-            <option value = '$$$'>$$$</option>
-            <option value = '$$$$'>$$$$</option>
+            <option value = 1>$</option>
+            <option value = 2>$$</option>
+            <option value = 3>$$$</option>
+            <option value = 4>$$$$</option>
           </select>
           <label for="rating">Rating:</label>
           <select name="rating">
@@ -23,7 +23,7 @@
             <option value = 5>5 stars</option>
           </select>
           <label for="open_now">Open now</label>
-          <input type="checkbox" name="open_now">
+          <input type="checkbox" name="open_now" checked='checked' value = true>
         </fieldset>
         
         <fieldset>
