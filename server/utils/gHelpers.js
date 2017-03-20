@@ -12,7 +12,7 @@ Example:
             destinations: '25 Pearl St, San Francisco, CA 94103|565 Grove St, San Francisco, CA 94102', 
             mode: 'driving' }
   results: [{"text":"10 mins","value":612},{"text":"9 mins","value":536}] */
-exports.getTravelTime = function(params, cb){
+exports.getTravelTimes = function(params, cb){
   googleMapsClient.distanceMatrix(params, function(err, response) {
     if (!err) {
       var matrix = response.json.rows[0].elements 

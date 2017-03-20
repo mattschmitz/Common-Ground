@@ -1,57 +1,34 @@
-var express = require('express')
-// Added to serve static files
-var path = require('path')
-var app = express()
-var yelp = require('./server/utils/yelpHelper')
-var gHelpers = require('./server/utils/gHelpers')
+var express = require('express');
+var path = require('path');
+var yelp = require('./server/utils/yelpHelper');
+var gHelpers = require('./server/utils/gHelpers');
+
+var app = express();
 
 var port = process.env.PORT || 8080;
 
-// Added to serve static files out of htmlTemplates
+//serve static files:
 app.use('/', express.static(path.join(__dirname)));
 app.use('/htmlTemplates', express.static(path.join(__dirname, '/htmlTemplates')));
 app.use('/server', express.static(path.join(__dirname, '/server')));
 app.use('/config', express.static(path.join(__dirname, '/config')));
 
-app.get('/', function (req, res) {
-  res.redirect('index.html')
-})
+//add anchors to map and database
+app.get('/anchor', function(req, res) {
+  var address = req.query.anchor_address + ',' + req.query.anchor_city + ',' + req.query.anchor_state + ' ' + req.query.anchor_zip;
+  var anchor = {
+    name: req.query.anchor_name,
+    address: address
+  };
+  gHelpers.geocode({address: address}, function(coords) {
+    yelp.setSearchArea(anchor, coords);
+    res.send(coords);
+  });
+});
 
-app.get('/directions', function(req, res){
-
-  //get with dummy data
-  gHelpers.getDirections({
-    origin: '944 Market St, San Francisco, CA 94102',
-    destination: '25 Pearl St, San Francisco, CA 94103', 
-    mode: 'transit'
-  }, function(data){
-    res.send(data);
-  })
-})
-
-app.get('/times', function(req, res){
-  //get with dummy data
-  gHelpers.getTravelTimes({
-    origins: '944 Market St, San Francisco, CA 94102',
-    destinations: '25 Pearl St, San Francisco, CA 94103|565 Grove St, San Francisco, CA 94102', 
-    mode: 'driving'
-  }, function(data){
-    res.send(data);
-  })
-})
-
-app.get('/geocode', function(req, res){
-  gHelpers.geocode({
-    address: '944 Market St, San Francisco, CA 94102'
-  }, function(data){
-    res.send(data);
-  })
-})
-
-app.get('/yelp', function (req, res) {
-  //get with dummy data
+//get results of search
+app.get('/search', function(req, res) {
   console.log(req.query);
-
   yelp.getBusinesses({
         "term": req.query.search_term,
         "price": req.query.price,
@@ -59,27 +36,33 @@ app.get('/yelp', function (req, res) {
       }, function(data) {
     res.send(data);
   });
+})
 
-});
-
-app.get('/anchor', function(req, res) {
-  var address = req.query.anchor_address + ',' + req.query.anchor_city + ',' + req.query.anchor_state + ' ' + req.query.anchor_zip;
-  var anchor = {
-    name: req.query.anchor_name,
-    address: address
-  };
-
-  gHelpers.geocode({address: address}, function(coords) {
-    yelp.setSearchArea(anchor, coords);
-    res.send(coords);
-  })
-
-});
-
-app.get('/map', function(req, res) {
-  res.redirect('./htmlTemplates/map.html');
-});
-
+//START SERVER: 
 app.listen(port, function () {
   console.log('Example app listening on port ' + port + '!')
 })
+
+
+//*********THESE ROUTES FOR DEVELOPMENT & TESTING ONLY: 
+  app.get('/directions', function(req, res){
+    //get directions with dummy data
+    gHelpers.getDirections({
+      origin: '944 Market St, San Francisco, CA 94102',
+      destination: '25 Pearl St, San Francisco, CA 94103', 
+      mode: 'transit'
+    }, function(data){
+      res.send(data);
+    })
+  })
+
+  app.get('/times', function(req, res){
+    //get with dummy data
+    gHelpers.getTravelTimes({
+      origins: '37.783617,-122.408955', //'944 Market St, San Francisco, CA 94102',
+      destinations: '37.770841,-122.423786|37.777179,-122.425929',//'33 Pearl St, San Francisco, CA 94103|565 Grove St, San Francisco, CA 94102', 
+      mode: 'driving'
+    }, function(data){
+      res.send(data);
+    })
+  })
