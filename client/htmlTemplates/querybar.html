@@ -6,16 +6,16 @@
         <fieldset>
         <legend>Find Common Ground</legend>
         <label for="search_term">Search for:</label>
-          <input class="inputText" type="text" name="search_term" placeholder="Restaurants, bars, food...">
+          <input class="inputText" type="text" ng-model="query.search_term" placeholder="Restaurants, bars, food...">
           <label for="price">Price:</label>
-          <select name="price">
+          <select ng-init="query.price='1'" ng-model="query.price">
             <option value = 1>$</option>
             <option value = 2>$$</option>
             <option value = 3>$$$</option>
             <option value = 4>$$$$</option>
           </select>
           <label for="rating">Rating:</label>
-          <select name="rating">
+          <select ng-init="query.rating='1'" ng-model="query.rating">
             <option value = 1>1 star</option>
             <option value = 2>2 stars</option>
             <option value = 3>3 stars</option>
@@ -23,22 +23,22 @@
             <option value = 5>5 stars</option>
           </select>
           <label for="open_now">Open now</label>
-          <input type="checkbox" name="open_now" checked='checked' value = true>
+          <input ng-init="query.open_now = true" type="checkbox" ng-model="query.open_now" checked='checked' value = true>
         </fieldset>
         
         <fieldset>
           <legend>Travel Options</legend>
           <label for="travel_mode">Travel Mode:</label>
-          <select name="travel_mode">
+          <select ng-init="query.travel_mode='driving'" ng-model="query.travel_mode">
             <option value="driving">Driving</option>
             <option value="transit">Public Transit</option>
             <option value="bicycling">Bicycling</option>
             <option value="walking">Walking</option>
           </select>
           <label for="travel_time">Max Travel Time:</label>
-          <input class="inputText" type="number" min="0" placeholder="0" name="travel_time">
+          <input class="inputText" type="number" min="0" placeholder="0" ng-model="query.travel_time">
         </fieldset>
-        <button type="button" class="submitQuery" ng-click="query.getresults()">Find Places!</button> 
+        <button type="button" class="submitQuery" ng-click="query.getresults.call(null, query.search_term, query.price, query.rating, query.open_now, query.travel_mode, query.travel_time)">Find Places!</button> 
         </form>
     </div>
   </body>
