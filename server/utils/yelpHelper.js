@@ -14,7 +14,7 @@ var setSearchArea = function(anchor, coords) {
   coordinates.push([coords.lat, coords.lng]);
   console.log(anchors, coordinates);
   if (anchors.length === 1) {
-    centroid = [coords.lat, coords.long];
+    centroid = [coords.lat, coords.lng];
   } else {
     centroid = utils.findCentroid(coordinates);
     radius = 2*utils.getMaximumDist(coordinates);
