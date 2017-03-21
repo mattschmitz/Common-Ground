@@ -1,7 +1,6 @@
 var yelp = require('./utils/yelpHelper');
 var gHelpers = require('./utils/gHelpers');
 var rankLocations = require('./utils/rankLocations');
-var request = require('request');
 //add body parser...
 
 exports.getResults = function(req, res){
@@ -50,14 +49,12 @@ exports.getResults = function(req, res){
       },
     ]
 
-  console.log('request-handler.js req.body:', req.body);
+  // console.log('request-handler.js req.body:', req.body);
 
-  yelp.getBusinesses(req.body.yelp, function(data) {
-    
-    //call rankLocations(data) - send back data
-
-    res.send(data);
-
+  yelp.getBusinesses(req.body.yelp, function(results) {
+    rankLocations(results, anchors, function(rankedResults){
+      res.send(rankedResults);
+    });
   });
 }
 
