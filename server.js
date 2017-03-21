@@ -32,7 +32,7 @@ app.get('/anchor', function(req, res) {
 //get results of search
 app.post('/search', function(req, res) {
   yelp.getBusinesses({
-        "term": req.body.yelp.search_term,
+        "term": req.body.yelp.term,
         "price": req.body.yelp.price,
         "open_now": req.body.yelp.open_now
       }, function(data) {

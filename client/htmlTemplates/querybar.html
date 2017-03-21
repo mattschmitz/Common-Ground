@@ -8,14 +8,14 @@
         <label for="search_term">Search for:</label>
           <input class="inputText" type="text" ng-model="query.search_term" placeholder="Restaurants, bars, food...">
           <label for="price">Price:</label>
-          <select ng-init="query.price='1'" ng-model="query.price">
+          <select ng-model="query.price">
             <option value = 1>$</option>
             <option value = 2>$$</option>
             <option value = 3>$$$</option>
             <option value = 4>$$$$</option>
           </select>
           <label for="rating">Rating:</label>
-          <select ng-init="query.rating='1'" ng-model="query.rating">
+          <select ng-model="query.rating">
             <option value = 1>1 star</option>
             <option value = 2>2 stars</option>
             <option value = 3>3 stars</option>
