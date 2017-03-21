@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var bodyParser = require('body-parser');
 var yelp = require('./server/utils/yelpHelper');
 var gHelpers = require('./server/utils/gHelpers');
 
@@ -12,6 +13,8 @@ app.use('/', express.static(path.join(__dirname)));
 app.use('/htmlTemplates', express.static(path.join(__dirname, '/htmlTemplates')));
 app.use('/server', express.static(path.join(__dirname, '/server')));
 app.use('/config', express.static(path.join(__dirname, '/config')));
+
+app.use(bodyParser.json());
 
 //add anchors to map and database
 app.get('/anchor', function(req, res) {
@@ -27,12 +30,11 @@ app.get('/anchor', function(req, res) {
 });
 
 //get results of search
-app.get('/search', function(req, res) {
-  console.log(req.query);
+app.post('/search', function(req, res) {
   yelp.getBusinesses({
-        "term": req.query.search_term,
-        "price": req.query.price,
-        "open_now": req.query.open_now
+        "term": req.body.yelp.search_term,
+        "price": req.body.yelp.price,
+        "open_now": req.body.yelp.open_now
       }, function(data) {
     res.send(data);
   });

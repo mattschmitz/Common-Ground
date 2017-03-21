@@ -13,11 +13,24 @@ angular.module('etapartments')
   this.list = [];
   this.center = {};
   this.getYelpResults = function() {
-    console.log('This is our yelp list before button press:', this.list);
-    search.query(function(data) {
+    // Create object
+    var params = {
+      anchors: [],
+      yelp: {
+        term: arguments[0],
+        price: arguments[1],
+        rating: arguments[2],
+        open_now: arguments[3]
+      },
+      google: {
+        travel_mode: arguments[4],
+        travel_time: arguments[5]
+      }
+    }
+
+    search.query(params, function(data) {
         this.list = data.businesses;
         this.center = data.centroid;
-        console.log('This is our yelp list after button press:', this.list);
     }.bind(this));
   }.bind(this);
 })
