@@ -41,8 +41,8 @@ exports.getResults = function(req, res){
       {
         name: 'Hack Reactor', 
         address: '944 Market St, San Francisco, CA 94102', 
-        coordinates: {lat: '37.783617', lng: '-122.408955'
-      },
+        coordinates: {lat: '37.783617', lng: '-122.408955'}
+      }, 
       {
         name: 'Home', 
         address: '33 Pearl St, San Francisco, CA 94103', 
@@ -59,11 +59,8 @@ exports.getResults = function(req, res){
     res.send(data);
 
   });
-
-
-
-
 }
+
 
 exports.addAnchor = function(req, res) {
   var address = req.query.anchor_address + ',' + req.query.anchor_city + ',' + req.query.anchor_state + ' ' + req.query.anchor_zip;
