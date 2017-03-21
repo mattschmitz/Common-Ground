@@ -23,6 +23,7 @@
     "angular": "^1.6.3",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
+    "mathjs": "^3.10.0",
     "path": "^0.12.7",
     "request": "^2.34.0",
     "underscore": "^1.8.3"

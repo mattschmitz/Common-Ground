@@ -1,18 +1,15 @@
 var _ = require('underscore');
+var math = require('mathjs')
 var gHelpers = require('./gHelpers')
 
+var getRank = function(std, avg) {
+  return math.round(avg + (.4 * std))
+}
 
 module.exports = function(yelpData, anchors, travelParams, cb) {
-// INPUT: array of yelp bizes, array of anchors
 
   var bizes = JSON.parse(yelpData).businesses
   // console.log(bizes[0].coordinates)
-
-
-//   get travel times for each anchor to each busines - store in array
-//     calls to distance matrix api
-  // var originCoordinates = '';
-  //get origins
 
   var anchorCoords = _.map(anchors, function(anchor){
     return (anchor.coordinates.lat + ',' + anchor.coordinates.lng);
@@ -38,25 +35,36 @@ module.exports = function(yelpData, anchors, travelParams, cb) {
 
       //once all the results have come in
       if (resultsCount === anchorCoords.length){
-        console.log(matrix);
+
+        //TODO: refactor so that this isn't necessary
+        var timesMatrix = math.transpose(matrix); 
+
+        _.each(bizes, function(biz, i) {
+
+          var times = timesMatrix[i];
+          var avg = math.round(math.mean(times));
+          var std = math.round(math.std(times, 'uncorrected'));
+          var rank = math.round(getRank(avg, std));
+
+          biz.travelTimes = {times: times, avg: avg, std: std, rank: rank};
+          console.log(biz.travelTimes);
+        });
+
+        // var sortedBizes = math.sort(yelpData, function sortByRank(bizA, bizB){
+        //   return bizA.travelTimes.rank - bizB.travelTimes.rank;
+        // })
+
+        // console.log(sortedBizes[0]);
+
         cb(yelpData);
 
-      //   //   for each business: 
-      //   //     -get average travel time for each biz
-      //   //     -get std for each biz
-      //   //     -generate rank for each biz
-      //   //     -create object 'travelTimes' with the above, add this object to array of yelp bizes
-      //   _.each(bizes, function(biz, index) {
-      //     travelTimes = {};
-      //     travelTimes.avg = average(matrix,i)
-
-      //   });
 
       }
-    })
-  })
+    });
+  });
 
 
+  cb(yelpData);
 
 
 
