@@ -18,13 +18,13 @@ angular.module('etapartments')
     // Create object
     var params = {
       anchors: this.anchors,
-      yelp: {
+      yelpParams: {
         term: term,
         price: price,
         rating: rating,
         open_now: open
       },
-      google: {
+      travelParams: {
         travel_mode: travel_mode,
         travel_time: travel_time
       }
