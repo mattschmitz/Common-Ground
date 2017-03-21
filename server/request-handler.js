@@ -15,7 +15,7 @@ exports.getResults = function(req, res){
   //     {
   //       name: 'Hack Reactor', 
   //       address: '944 Market St, San Francisco, CA 94102', 
-  //       coordinates: {lat: '37.783617', lng: '-122.408955'
+  //       coordinates: {lat: '37.783617', lng: '-122.408955'}
   //     },
   //     {
   //       name: 'Home', 
@@ -23,13 +23,13 @@ exports.getResults = function(req, res){
   //       coordinates: {lat: '37.770841', lng: '-122.423786'}
   //     },
   //   ],
-  //   yelp: { 
+  //   yelpParams: { 
   //     term: 'bars', 
   //     price: '2', 
   //     rating: '2', 
   //     open_now: true 
   //   },
-  //   travel: { 
+  //   travelParams: { 
   //     travel_mode: 'driving', 
   //     travel_time: 10 
   //   } 
@@ -51,8 +51,8 @@ exports.getResults = function(req, res){
 
   // console.log('request-handler.js req.body:', req.body);
 
-  yelp.getBusinesses(req.body.yelp, function(results) {
-    rankLocations(results, anchors, function(rankedResults){
+  yelp.getBusinesses(req.body.yelp, function(yelpResults) {
+    rankLocations(yelpResults, anchors, req.body.google, function(rankedResults){
       res.send(rankedResults);
     });
   });
