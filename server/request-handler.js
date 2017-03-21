@@ -38,11 +38,7 @@ exports.getResults = function(req, res){
 
   console.log('request-handler.js req.body:', req.body);
 
-  yelp.getBusinesses({
-        term: req.body.yelp.term,
-        price: req.body.yelp.price,
-        open_now: req.body.yelp.open_now
-      }, function(data) {
+  yelp.getBusinesses(req.body.yelp, function(data) {
     res.send(data);
   });
 }
