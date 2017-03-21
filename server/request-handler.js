@@ -5,29 +5,43 @@ var request = require('request');
 //add body parser...
 
 exports.getResults = function(req, res){
-  //dummy data
-  // req.body = {
+
+  // //currently, anchor:
+  // [ { name: 'Matthew S Schmitz',
+  //   address: '824 East Forest Hills Blvd, Durham, NC 27707' } ] [ [ 35.982934, -78.9101589 ] ]
+
+  // //would like req.body to be of form:
+  // { 
   //   anchors: [
-  //     {lat: '37.783675', lng: '-122.408916', name: 'Hack Reactor'}, 
-  //     {lat: '37.770841', lng: '-122.423786', name: 'Home'}
+  //     {
+  //       name: 'Hack Reactor', 
+  //       address: '944 Market St, San Francisco, CA 94102', 
+  //       coordinates: {lat: '37.783617', lng: '-122.408955'
+  //     },
+  //     {
+  //       name: 'Home', 
+  //       address: '33 Pearl St, San Francisco, CA 94103', 
+  //       coordinates: {lat: '37.770841', lng: '-122.423786'}
+  //     },
   //   ],
-  //   yelp: {
-  //     term: 'bars',
-  //     price: 4,
-  //     open_now: true
+  //   yelp: { 
+  //     term: 'bars', 
+  //     price: '2', 
+  //     rating: '2', 
+  //     open_now: true 
   //   },
-  //   travel: {
-  //     mode: 'transit',
-  //     maxTime: undefined,
-  //   }
-  // }; 
+  //   travel: { 
+  //     travel_mode: 'driving', 
+  //     travel_time: 10 
+  //   } 
+  // }
 
   console.log('request-handler.js req.body:', req.body);
 
   yelp.getBusinesses({
-        "term": req.body.yelp.term,
-        "price": req.body.yelp.price,
-        "open_now": req.body.yelp.open_now
+        term: req.body.yelp.term,
+        price: req.body.yelp.price,
+        open_now: req.body.yelp.open_now
       }, function(data) {
     res.send(data);
   });

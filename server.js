@@ -20,14 +20,7 @@ app.use(bodyParser.json());
 //add anchors to map and database
 app.get('/anchor', handler.addAnchor);
 
-// expected params: 
-// {
-//   anchors: [//array of anchors],
-//   yelp: {parameters to be passed to the yelp api}
-//   travel: {parameters relating to travel times and modes}
-// }
 app.post('/search', handler.getResults);
-
 
 app.listen(port, function () {
   console.log('Example app listening on port ' + port + '!')
