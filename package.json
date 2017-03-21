@@ -21,6 +21,7 @@
   "dependencies": {
     "@google/maps": "^0.3.1",
     "angular": "^1.6.3",
+    "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "path": "^0.12.7",
     "request": "^2.34.0",
