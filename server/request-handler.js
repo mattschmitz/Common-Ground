@@ -36,11 +36,33 @@ exports.getResults = function(req, res){
   //   } 
   // }
 
+  //dummy data
+  var anchors = [
+      {
+        name: 'Hack Reactor', 
+        address: '944 Market St, San Francisco, CA 94102', 
+        coordinates: {lat: '37.783617', lng: '-122.408955'
+      },
+      {
+        name: 'Home', 
+        address: '33 Pearl St, San Francisco, CA 94103', 
+        coordinates: {lat: '37.770841', lng: '-122.423786'}
+      },
+    ]
+
   console.log('request-handler.js req.body:', req.body);
 
   yelp.getBusinesses(req.body.yelp, function(data) {
+    
+    //call rankLocations(data) - send back data
+
     res.send(data);
+
   });
+
+
+
+
 }
 
 exports.addAnchor = function(req, res) {
