@@ -14,3 +14,25 @@ INPUT: array of yelp bizes, array of anchors
 OUTPUT: array of yelp bizes
 
 */
+
+var _ = require('underscore');
+var gHelpers = require('./gHelpers')
+
+module.exports = function(yelpData, anchors, cb) {
+
+  var bizes = JSON.parse(yelpData).businesses
+
+  // console.log(bizes[0].coordinates);
+  //build strings that can be passed into matrix Call
+      // {
+      //     origins: '37.783617,-122.408955', 
+      //     destinations: '37.770841,-122.423786|37.777179,-122.425929',
+      //     mode: 'driving'
+      //   }
+
+  //take averages, std, and rank - add to help data
+
+  //sort by rank
+
+  cb(yelpData);
+};
