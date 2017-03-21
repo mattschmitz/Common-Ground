@@ -8,7 +8,8 @@ var getRank = function(std, avg) {
 
 module.exports = function(yelpData, anchors, travelParams, cb) {
 
-  var bizes = JSON.parse(yelpData).businesses
+  var yData = JSON.parse(yelpData);
+  var bizes = yData.businesses
   // console.log(bizes[0].coordinates)
 
   var anchorCoords = _.map(anchors, function(anchor){
@@ -38,7 +39,7 @@ module.exports = function(yelpData, anchors, travelParams, cb) {
 
         //TODO: refactor so that this isn't necessary
         var timesMatrix = math.transpose(matrix); 
-
+        
         _.each(bizes, function(biz, i) {
 
           var times = timesMatrix[i];
@@ -47,26 +48,20 @@ module.exports = function(yelpData, anchors, travelParams, cb) {
           var rank = math.round(getRank(avg, std));
 
           biz.travelTimes = {times: times, avg: avg, std: std, rank: rank};
-          console.log(biz.travelTimes);
+          // console.log(biz.travelTimes);
         });
 
-        // var sortedBizes = math.sort(yelpData, function sortByRank(bizA, bizB){
-        //   return bizA.travelTimes.rank - bizB.travelTimes.rank;
-        // })
+        //TODO: refactor to use in place sort
+        var sortedBizes = math.sort(bizes, function(bizA, bizB){
+          return bizA.travelTimes.rank - bizB.travelTimes.rank;
+        });
 
-        // console.log(sortedBizes[0]);
+        yData.businesses = sortedBizes;
 
-        cb(yelpData);
-
+        cb(JSON.stringify(yData));
 
       }
     });
   });
-
-
-  cb(yelpData);
-
-
-
 
 };
