@@ -11,6 +11,6 @@ angular.module('etapartments')
   }
 })
 
-.controller('QueryBar', function ($scope, $timeout){
+.controller('QueryBar', function (){
   
 });

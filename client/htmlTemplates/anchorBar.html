@@ -1,13 +1,13 @@
 <div class="anchorBar">
-  <form action="/anchor">
-    <label for="anchor_name">Name:</label>
-    <input class="inputText" type="text" name="anchor_name" placeholder="Name your anchor..." required/>
-    <label for="anchor_address">Street Address:</label>
-    <input class="inputText" type="text" name="anchor_address" placeholder="Enter address..." />
-    <label for="anchor_city">City:</label>
-    <input class="inputText" type="text" name="anchor_city" placeholder="Enter city..." />
-    <label for="anchor_state">State:</label>
-    <select name="anchor_state"/>
+  <form>
+    <label for="anchor.name">Name:</label>
+    <input class="inputText" type="text" ng-model="anchor.name" placeholder="Name your anchor..." required/>
+    <label for="anchor.address">Street Address:</label>
+    <input class="inputText" type="text" ng-model="anchor.address" placeholder="Enter address..." />
+    <label for="anchor.city">City:</label>
+    <input class="inputText" type="text" ng-model="anchor.city" placeholder="Enter city..." />
+    <label for="anchor.state">State:</label>
+    <select ng-model="anchor.state"/>
       <option value=""></option>
       <option value="AL">AL</option>
       <option value="AK">AK</option>
@@ -60,8 +60,8 @@
       <option value="WI">WI</option>
       <option value="WY">WY</option>
     </select>
-    <label for="anchor_zip">Zip Code:</label>
-    <input class="inputText" type="number" name="anchor_zip" min="00000" max="99999" placeholder="00000"required/>
-    <button class="submitAnchor" type="submit">Save Anchor</button> 
+    <label for="anchor.zip">Zip Code:</label>
+    <input class="inputText" type="number" ng-model="anchor.zip" min="00000" max="99999" placeholder="00000"required/>
+    <button class="submitAnchor" ng-click="anchor.sendandclear()" type="submit">Save Anchor</button> 
     </form>
 </div>

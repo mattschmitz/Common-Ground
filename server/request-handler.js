@@ -60,13 +60,15 @@ exports.getResults = function(req, res){
 
 
 exports.addAnchor = function(req, res) {
-  var address = req.query.anchor_address + ',' + req.query.anchor_city + ',' + req.query.anchor_state + ' ' + req.query.anchor_zip;
-  var anchor = {
-    name: req.query.anchor_name,
+  var address = req.body.address + ', ' + req.body.city + ', ' + req.body.state + ' ' + req.body.zip;
+  req.body = {
+    name: req.body.name,
     address: address
   };
   gHelpers.geocode({address: address}, function(coords) {
-    yelp.setSearchArea(anchor, coords);
-    res.sendStatus(204);
+    req.body.coordinates = coords;
+    req.body.centroid = yelp.setSearchArea(req.body, function(data) {
+      res.send(data);
+    });
   })
 }

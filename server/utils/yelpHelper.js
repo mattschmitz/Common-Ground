@@ -8,16 +8,18 @@ var centroid = [37.7836966, -122.4089664];
 var anchors = [];
 var coordinates = [];
 
-var setSearchArea = function(anchor, coords) {
-  
-  anchors.push(anchor);
-  coordinates.push([coords.lat, coords.lng]);
-  console.log(anchors, coordinates);
-  if (anchors.length === 1) {
-    centroid = [coords.lat, coords.lng];
+var setSearchArea = function(anchor, callback) {
+  coordinates.push([anchor.coordinates.lat, anchor.coordinates.lng]);
+  if (coordinates.length === 1) {
+    centroid = coordinates[0];
   } else {
     centroid = utils.findCentroid(coordinates);
-    radius = 2*utils.getMaximumDist(coordinates);
+    radius = 1000 * utils.getMaximumDist(coordinates);
+  }
+  if (callback) {
+    anchor.centroid = {lat: centroid[0], lng: centroid[1]};
+    anchors.push(anchor);
+    callback(anchor);
   }
 }
 

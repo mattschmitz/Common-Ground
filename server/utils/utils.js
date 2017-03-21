@@ -6,7 +6,7 @@ var getMaximumDist = function (coords) {
                          Math.pow((coords[i][1] - coords[j][1]), 2)));
     }
   }
-  return Math.ceiling(max(matrix));
+  return Math.ceil(max(matrix));
 }
 
 var max = function(array) {
