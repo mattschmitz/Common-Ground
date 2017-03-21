@@ -3,13 +3,13 @@
 		<user-nav></user-nav>
 	</div>
 	<div id="anchorBar">
-		<anchor-bar></anchor-bar>
+		<anchor-bar sendanchor="app.sendAnchor"></anchor-bar>
 	</div>
 	<div id="queryBar">
 		<query-bar getresults="app.getYelpResults"></query-bar>
 	</div>
   <div id="mapWindow">
-    <map-display results="app.list" center="app.center"></map-display>
+    <map-display results="app.list" center="app.center" anchors="app.anchors"></map-display>
   </div>
   <div id="resultsListContainer">
     <results-list results="app.list"></results-list>

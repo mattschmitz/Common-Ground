@@ -18,7 +18,7 @@ app.use('/config', express.static(path.join(__dirname, '/config')));
 app.use(bodyParser.json());
 
 //add anchors to map and database
-app.get('/anchor', handler.addAnchor);
+app.post('/anchor', handler.addAnchor);
 
 app.post('/search', handler.getResults);
 

@@ -38,7 +38,7 @@
           <label for="travel_time">Max Travel Time:</label>
           <input class="inputText" type="number" min="0" placeholder="0" ng-model="query.travel_time">
         </fieldset>
-        <button type="button" class="submitQuery" ng-click="query.getresults.call(null, query.search_term, query.price, query.rating, query.open_now, query.travel_mode, query.travel_time)">Find Places!</button> 
+        <button type="button" class="submitQuery" ng-click="query.getresults(query.search_term, query.price, query.rating, query.open_now, query.travel_mode, query.travel_time)">Find Places!</button> 
         </form>
     </div>
   </body>
