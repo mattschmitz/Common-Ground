@@ -17,5 +17,10 @@ var connection = {
 
 var db = pgp(connection)
 
+db.connect()
+
+query('SELECT  * FROM users')
+.then( users => {console.log(users)});
+
 
 
