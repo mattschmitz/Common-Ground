@@ -18,7 +18,7 @@ angular.module('etapartments')
 
   this.options = {
     start: {lng: -122.41, lat: 37.78},
-    minZoom: 11,
+    minZoom: 5,
     maxZoom: 19,
     zoom: 11
   }
@@ -122,7 +122,7 @@ angular.module('etapartments')
     array = [];
   }.bind(this);
 
-  // Wait for the Google Maps API call to finish before trying to instantiate the maps object
+  // Wait for the Google Maps API call to finish loading before trying to instantiate the maps object
   $timeout(function() {
     $scope.map = new $window.google.maps.Map(document.getElementById('mapWindow'), {
       center: this.options.start,
@@ -145,12 +145,27 @@ angular.module('etapartments')
     }.bind(this), true);
 
     $scope.$watch('gmap.anchors', function() {
+      // If anchors are already rendered
       if (this.anchorsList.length > 0) {
+        // Delete all anchors
         this.deleteMarkers(this.anchorsList);
       }
+      // If anchors need to be rendered
       if ($scope.gmap.anchors.length > 0) {
+        // First check if viewport will show each anchor
+        // Get current bounds of viewport
+        var bounds = $scope.map.getBounds();
+        // Loop through anchors
+        for (var i = 0; i < $scope.gmap.anchors.length; i++) {
+          // Extend the bounds to fit the anchor
+          bounds.extend($scope.gmap.anchors[i].coordinates);
+        }
+        // Set the bounds of the map to the newly extended bounds
+        $scope.map.fitBounds(bounds);
+        // Set the center of the map to the most recent centroid
         $scope.map.setCenter($scope.gmap.anchors[$scope.gmap.anchors.length - 1].centroid)
       }
+      // Finally, add all anchors
       this.addAnchors($scope.map, $scope.gmap.anchors);
     }.bind(this), true);
 
