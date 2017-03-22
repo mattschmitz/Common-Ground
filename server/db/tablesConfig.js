@@ -3,7 +3,7 @@ module.exports = function (db) {
 	return db.query('\
 		CREATE TABLE IF NOT EXISTS users ( \
 		id SERIAL PRIMARY KEY, \
-		username VARCHAR(25), \
+		username VARCHAR(50), \
 		hash VARCHAR(255), \
 		salt VARCHAR(255) \
 		); \
