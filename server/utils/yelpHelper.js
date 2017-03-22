@@ -1,5 +1,4 @@
 var request = require('request');
-var keys = require('../../config/API_KEYS');
 var utils = require('./utils.js');
 var _ = require('underscore');
 
@@ -34,7 +33,7 @@ var options = {
   headers: 
    { 'postman-token': '5073d720-9247-c291-f3cf-3701c76aca74',
      'cache-control': 'no-cache',
-     authorization: keys.YELP_KEY
+     authorization: process.env.YELP_API_KEY
     } 
   };
 

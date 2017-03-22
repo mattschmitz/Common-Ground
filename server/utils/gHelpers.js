@@ -1,8 +1,7 @@
-var keys = require('../../config/API_KEYS');
 var _ = require('underscore');
 
 var googleMapsClient = require('@google/maps').createClient({
-  key: keys.G_DIRECTIONS_KEY
+  key: process.env.G_MAPS_CLIENT_API_KEY
 });
 
 /* Returns an array with each row corresponding to an origin and each col corresponding to a destination
