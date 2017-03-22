@@ -152,7 +152,8 @@ angular.module('etapartments')
       }
       // If anchors need to be rendered
       if ($scope.gmap.anchors.length > 0) {
-        // First check if viewport will show each anchor
+        // Set the center of the map to the most recent centroid
+        $scope.map.setCenter($scope.gmap.anchors[$scope.gmap.anchors.length - 1].centroid);
         // Get current bounds of viewport
         var bounds = $scope.map.getBounds();
         // Loop through anchors
@@ -162,8 +163,6 @@ angular.module('etapartments')
         }
         // Set the bounds of the map to the newly extended bounds
         $scope.map.fitBounds(bounds);
-        // Set the center of the map to the most recent centroid
-        $scope.map.setCenter($scope.gmap.anchors[$scope.gmap.anchors.length - 1].centroid)
       }
       // Finally, add all anchors
       this.addAnchors($scope.map, $scope.gmap.anchors);
