@@ -6,18 +6,19 @@ var googleMapsClient = require('@google/maps').createClient({
 });
 
 /* Returns an array with each row corresponding to an origin and each col corresponding to a destination
-each element in the array is an object representing the travel time between origin and destination. 
+each element in the array is the travel time in seconds from origin to destination 
 Example:
   params: { origins: '944 Market St, San Francisco, CA 94102',
             destinations: '25 Pearl St, San Francisco, CA 94103|565 Grove St, San Francisco, CA 94102', 
             mode: 'driving' }
-  results: [{"text":"10 mins","value":612},{"text":"9 mins","value":536}] */
+  results: [612, 536]
+  */
 exports.getTravelTimes = function(params, cb){
   googleMapsClient.distanceMatrix(params, function(err, response) {
     if (!err) {
       var matrix = response.json.rows[0].elements 
       var travel_times = _.map(matrix, function(el){
-         return el.duration;
+         return el.duration.value;
       });
       cb(travel_times);
     }

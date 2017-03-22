@@ -1,38 +1,67 @@
-/*
-
-INPUT: array of yelp bizes, array of anchors
-
-  get travel times for each anchor to each busines - store in array
-    calls to distance matrix api
-
-  for each business: 
-    -get average travel time for each biz
-    -get std for each biz
-    -generate rank for each biz
-    -create object 'travelTimes' with the above, add this object to array of yelp bizes
-
-OUTPUT: array of yelp bizes
-
-*/
-
 var _ = require('underscore');
+var math = require('mathjs')
 var gHelpers = require('./gHelpers')
 
-module.exports = function(yelpData, anchors, cb) {
+var getRank = function(std, avg) {
+  return math.round(avg + (.4 * std))
+}
 
-  var bizes = JSON.parse(yelpData).businesses
+module.exports = function(yelpData, anchors, travelParams, cb) {
 
-  // console.log(bizes[0].coordinates);
-  //build strings that can be passed into matrix Call
-      // {
-      //     origins: '37.783617,-122.408955', 
-      //     destinations: '37.770841,-122.423786|37.777179,-122.425929',
-      //     mode: 'driving'
-      //   }
+  var yData = JSON.parse(yelpData);
+  var bizes = yData.businesses
+  // console.log(bizes[0].coordinates)
 
-  //take averages, std, and rank - add to help data
+  var anchorCoords = _.map(anchors, function(anchor){
+    return (anchor.coordinates.lat + ',' + anchor.coordinates.lng);
+  })
 
-  //sort by rank
+  var bizCoordinatesString = _.map(bizes, function(biz){
+    return (biz.coordinates.latitude + ',' + biz.coordinates.longitude);
+  }).join('|')
+  
+  var matrix = [];
+  var resultsCount = 0;
 
-  cb(yelpData);
+  _.each(anchorCoords, function(anchorCoordPair, index) {
+    var params = {
+      origins: anchorCoordPair,
+      destinations: bizCoordinatesString,
+      mode: travelParams.travel_mode
+    };
+
+    gHelpers.getTravelTimes(params, function(results){
+      matrix[index] = results;
+      resultsCount++;
+
+      //once all the results have come in
+      if (resultsCount === anchorCoords.length){
+
+        //TODO: refactor so that this isn't necessary
+        var timesMatrix = math.transpose(matrix); 
+        
+        _.each(bizes, function(biz, i) {
+
+          var times = timesMatrix[i];
+          var avg = math.round(math.mean(times));
+          var std = math.round(math.std(times, 'uncorrected'));
+          var rank = math.round(getRank(avg, std));
+
+          biz.travelTimes = {times: times, avg: avg, std: std, rank: rank};
+          // console.log(biz.travelTimes);
+        });
+
+        //TODO: refactor to use in place sort
+        var sortedBizes = math.sort(bizes, function(bizA, bizB){
+          return bizA.travelTimes.rank - bizB.travelTimes.rank;
+        });
+
+        yData.businesses = sortedBizes;
+
+        cb(JSON.stringify(yData));
+
+      }
+    });
+  });
+
 };
