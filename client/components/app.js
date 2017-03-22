@@ -49,4 +49,8 @@ angular.module('etapartments')
       // Should display all anchors
     }.bind(this))
   }.bind(this);
+
+  this.deleteAnchor = function(index) {
+    this.anchors.splice(index,1);
+  }.bind(this);
 })
