@@ -1,12 +1,6 @@
-<form action="/login" method="post">
-        <fieldset>
-        <label>Username:</label>
-        <input type="text" name="username" class="username"/>
-    
-        <label>Password:</label>
-        <input type="password" name="password" class="password"/>
-        </fieldset>
-    
-        <button type="submit" >Log in</button>x 
-
+<form novalidate class="simple-form">
+    <label>Username: <input type="text" ng-model="userNav.username" /></label><br />
+    <label>Password: <input type="text" ng-model="userNav.password" /></label><br />
+    <input type="button" ng-click="userNav.signUp()" value="Sign up" />
+    <input type="button" ng-click="userNav.logIn()" value="Log in" />
 </form>

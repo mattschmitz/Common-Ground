@@ -45,7 +45,6 @@ passport.deserializeUser(function(id, done) {
 //in the future, we will query the database here
 passport.use(new LocalStrategy(
   function(username, password, done) {
-
       if (username === 'tyler') { return done(null, 'tyler', {message: 'correct'})}
       else { return done(null, false, {message: 'in else'})}
       
@@ -57,10 +56,12 @@ passport.use(new LocalStrategy(
 
 //signup and login routes
 //choose redirect routes
-app.post('/login',
+app.post('/login', function(req, res, next) {
+    console.log(req.body.username);
     passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/',
-                                   failureFlash: true })
+                                   failureRedirect: '/server',
+                                   failureFlash: true })(req, res, next);
+  }
 );
 
 
