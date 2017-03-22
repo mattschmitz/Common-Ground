@@ -3,7 +3,7 @@ angular.module('etapartments')
   return {
     scope: {
       anchor: '<',
-      aindex: '=',
+      aindex: '<',
       delete: '<'
     },
     controllerAs: 'anchorEntry',
