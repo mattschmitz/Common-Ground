@@ -28,6 +28,9 @@ angular.module('etapartments')
   this.anchorsList = [];
 
   this.addPoints = function (map, locations){
+    // Clear markers array
+    this.markers = [];
+    
     var marker, i
     // Loop through all locations
     for (i = 0; i < locations.length; i++) {  
