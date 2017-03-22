@@ -168,5 +168,11 @@ angular.module('etapartments')
       this.addAnchors($scope.map, $scope.gmap.anchors);
     }.bind(this), true);
 
+    $scope.$on('showResultOnMap', function(event, index) {
+      // This waits for a 'showResultOnMap' broadcast from app
+      // Once triggered, it will trigger a click event on the marker which will show the infowindow associated with that marker
+      $window.google.maps.event.trigger(this.markers[index], 'click');
+    }.bind(this));
+
   }.bind(this), 100);
 })
