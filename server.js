@@ -4,6 +4,10 @@ var bodyParser = require('body-parser');
 var yelp = require('./server/utils/yelpHelper');
 var gHelpers = require('./server/utils/gHelpers');
 var handler = require('./server/request-handler');
+var passport = require('passport');
+var session = require('express-session');
+var LocalStrategy = require('passport-local').Strategy;
+var flash = require('connect-flash');
 
 var app = express();
 
@@ -16,6 +20,48 @@ app.use('/server', express.static(path.join(__dirname, '/server')));
 app.use('/config', express.static(path.join(__dirname, '/config')));
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({secret: 'keyboard cat'}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+//this will call our crypto/serialization methods
+passport.serializeUser(function(user, done) {
+  done(null, "abc");
+});
+
+passport.deserializeUser(function(id, done) {
+  done(null, 'tyler');
+});
+
+
+//dummy strategy
+//if username is tyler, successful login
+//else unsuccessful
+
+//in the future, we will query the database here
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+
+      if (username === 'tyler') { return done(null, 'tyler', {message: 'correct'})}
+      else { return done(null, false, {message: 'in else'})}
+      
+
+
+    
+  }
+));
+
+//signup and login routes
+//choose redirect routes
+app.post('/login',
+    passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/',
+                                   failureFlash: true })
+);
+
 
 //add anchors to map and database
 app.post('/anchor', handler.addAnchor);
