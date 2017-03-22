@@ -7,7 +7,6 @@ var getRank = function(std, avg) {
 }
 
 module.exports = function(yelpData, anchors, travelParams, cb) {
-
   var yData = JSON.parse(yelpData);
   var bizes = yData.businesses
   // console.log(bizes[0].coordinates)
@@ -27,9 +26,8 @@ module.exports = function(yelpData, anchors, travelParams, cb) {
     var params = {
       origins: anchorCoordPair,
       destinations: bizCoordinatesString,
-      mode: travelParams.travel_mode
+      mode: anchors[index].travel_mode
     };
-
     gHelpers.getTravelTimes(params, function(results){
       matrix[index] = results;
       resultsCount++;
