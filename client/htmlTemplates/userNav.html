@@ -3,4 +3,5 @@
     <label>Password: <input type="text" ng-model="userNav.password" /></label><br />
     <input type="button" ng-click="userNav.signUp()" value="Sign up" />
     <input type="button" ng-click="userNav.logIn()" value="Log in" />
+    <div style="color: red" ng-if="userNav.displayMessage">Incorrect Login Info</div>
 </form>
