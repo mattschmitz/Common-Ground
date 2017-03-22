@@ -1,0 +1,15 @@
+<li class="anchor-entry">
+  <div class="anchorsContainer">
+    <span>Name: {{anchorEntry.anchor.name}}</span>
+    <span>Address: {{anchorEntry.anchor.fullAddress}}</span>
+    <span>Travel Mode: </span>
+    <select ng-model="anchorEntry.anchor.travel_mode">
+      <option value="driving">Driving</option>
+      <option value="transit">Public Transit</option>
+      <option value="bicycling">Bicycling</option>
+      <option value="walking">Walking</option>
+    </select>
+    <button type="button" ng-click="anchorEntry.delete(anchorEntry.aindex)">Delete</button> 
+    </div>
+  </div>
+</li>
