@@ -5,7 +5,7 @@ var db = database.db
 
 //find a user given an inputted username
 var findUser = function (username) {
-	var queryString = 'SELECT  * FROM users WHERE username=$1';
+	var queryString = 'SELECT * FROM users WHERE username=$1';
 	return db.query(queryString, [username])
 	.then(function(users) {
 		console.log(users, 'users')
@@ -16,11 +16,6 @@ var findUser = function (username) {
 		throw error;
 	})
 }
-
-//create a new user given a user object that contains:
-// 1. user-chosen username
-// 2. giraffe-generated hash value
-// 3. giraffe-generated salt value
 
 var createUser = function (user) {
 
@@ -46,23 +41,27 @@ var createUser = function (user) {
 	});
 }
 
+
+
+
+var loginAuth = function(username, password) {
+	// db query with username, return username, password, salt
+	return db.query('SELECT * FROM users where username=$1', username).then(function(results) {
+		var stored = results[0]
+		if(utils.compareHash(password, stored.hash, stored.salt)) {
+			console.log('SUCCESS!')
+			return true;
+		} else {
+			console.log('FAILURE!')
+			return false;
+		}
+	})
+}
+
+
+
 module.exports = {
 	findUser: findUser,
-	createUser: createUser
+	createUser: createUser,
+	loginAuth: loginAuth,
 };
-
-// var user = {
-// 	username: 'justinjyoo',
-// 	password: '123'
-// }
-
-
-// // example of how to create a user only if the username does not exist
-// findUser(user.username).then(function(results) {
-// 	if(results[0]){
-// 		console.log('user has already been created...')
-// 		return;
-// 	}
-// 	createUser(user)
-// })
-

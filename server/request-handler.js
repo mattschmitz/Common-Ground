@@ -1,6 +1,8 @@
 var yelp = require('./utils/yelpHelper');
 var gHelpers = require('./utils/gHelpers');
 var rankLocations = require('./utils/rankLocations');
+var anchorsDb = require('./db/Models/anchors')
+var Promise = require('bluebird')
 //add body parser...
 
 exports.getResults = function(req, res){
@@ -50,5 +52,32 @@ exports.addAnchor = function(req, res) {
     yelp.setSearchArea(req.body, function(data) {
       res.send(data);
     });
+  })
+}
+
+exports.loadAnchors = function (req, res, next) {
+  anchorsDb.findById_Anchors(req.user).then(function(results) {
+  var anchorsList = [];
+
+  if(req.user) {
+    results.forEach(function(anchor) {
+      var splitAddress = anchor.anchor_address.split('/?><');
+      var firstLine = splitAddress[0] + ', ';
+      var secondLine = splitAddress[1] + ', ' + splitAddress[2] + ' ' + splitAddress[3];
+
+      var anchor = {
+        name: anchor.anchor_name,
+        coordinates: JSON.parse(results[0].anchor_coordinates),
+        splitAddress: [firstLine, secondLine],
+        travel_mode: anchor.travel_mode
+      }
+
+      anchorsList.push(anchor);
+      console.log(anchorsList)
+    })
+      res.status(200).send(anchorsList)
+    } else {
+      res.status(200).send(anchorsList)
+    }
   })
 }

@@ -7,9 +7,11 @@ var gHelpers = require('./server/utils/gHelpers');
 var handler = require('./server/request-handler');
 var passport = require('passport');
 var session = require('express-session');
+var cookieParser = require('cookie-parser')
 var LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
-var 
+var authUsers = require('./server/db/Models/users')
+var anchorsDb = require('./server/db/Models/anchors')
 
 var app = express();
 
@@ -21,12 +23,15 @@ app.use('/htmlTemplates', express.static(path.join(__dirname, '/htmlTemplates'))
 app.use('/server', express.static(path.join(__dirname, '/server')));
 app.use('/config', express.static(path.join(__dirname, '/config')));
 
-app.use(passport.initialize());
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(flash());
+
 app.use(session({secret: 'keyboard cat'}));
+
+app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 
 
@@ -35,49 +40,59 @@ app.use(passport.session());
 //if username is tyler, successful login
 //else unsuccessful
 
-//in the future, we will query the database here
-//this will call our crypto/serialization methods
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(user, done) {
-  done(null, user);
-});
 
 //signup and login routes
 //choose redirect routes
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-      if (username === 'tyler') { return done(null, 'tyler', {message: 'correct'})}
-      else { return done(null, false, {message: 'in else'})}
+          authUsers.loginAuth(username, password).then(function(results) {
+            if(results) {
+              return done(null, username, {message: 'correct'})
+            } else {
+              return done(null, false, {message: 'try again'})
+            }
+          })
   }
 ));
 
+//in the future, we will query the database here
+//this will call our crypto/serialization methods
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
 //signup and login routes
-//choose redirect routes
-app.post('/login', function(req, res, next) {
-    console.log(req.body.username);
-    passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/server',
-                                   failureFlash: true })(req, res, next);
-  }
-
-);
-
 app.post('/signup', function (req, res) {
-  findUser(req.user.username).then(function(results) {
+  authUsers.findUser(req.body.username).then(function(results) {
     if(results[0]){
       res.status(400).send()
       return;
     } else {
-      createUser(user)
+      authUsers.createUser(req.body)
       res.status(200).send()
     }
   })
 })
 
+//choose redirect routes
+app.post('/login', function(req, res, next) {
+    passport.authenticate('local', {successRedirect: '/loadanchors',
+                                   failureRedirect: '/server',
+                                   failureFlash: true })(req, res, next);
+  }
+);
+
+app.all('/loadanchors', handler.loadAnchors);
+
+app.post('/deleteanchor', function(req, res, next) {
+  anchorsDb.deleteAnchor(req.body.rowId)
+})
 
 //add anchors to map and database
 app.post('/anchor', handler.addAnchor);
@@ -87,6 +102,13 @@ app.post('/search', handler.getResults);
 app.listen(port, function () {
   console.log('Example app listening on port ' + port + '!')
 })
+
+// logs the user out in passport's state
+app.get('/logout', function(req, res){
+  req.logout();
+  console.log('logout is successful!')
+  res.redirect('/');
+});
 
 //*********THESE ROUTES FOR DEVELOPMENT & TESTING ONLY: 
   app.get('/directions', function(req, res){
@@ -110,3 +132,4 @@ app.listen(port, function () {
       res.send(data);
     })
   })
+
