@@ -8,10 +8,11 @@ var findUser = function (username) {
 	var queryString = 'SELECT  * FROM users WHERE username=$1';
 	return db.query(queryString, [username])
 	.then(function(users) {
-		console.log(users)
-		return users[0];
+		console.log(users, 'users')
+		return users;
 	})
 	.catch(function(error){
+		console.log('error!')
 		throw error;
 	})
 }
@@ -54,13 +55,14 @@ var user = {
 	username: 'justinjyoo',
 	password: '123'
 }
-console.log(findUser(user.username), 'no !')
-console.log(!findUser(user.username), '!')
-console.log(!!findUser(user.username), '!!')
 
-findUser(user.username).catch(function() {
-	createUser(user)
-}).then(function() {
-	console.log('user has already been created...')
-})
+
+// // example of how to create a user only if the username does not exist
+// findUser(user.username).then(function(results) {
+// 	if(results[0]){
+// 		console.log('user has already been created...')
+// 		return;
+// 	}
+// 	createUser(user)
+// })
 
