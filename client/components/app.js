@@ -25,24 +25,23 @@ angular.module('etapartments')
         open_now: open
       },
       travelParams: {
-        travel_mode: travel_mode,
         travel_time: travel_time
       }
     }
-
     search.query(params, function(data) {
         this.list = data.businesses;
         this.center = data.centroid;
     }.bind(this));
   }.bind(this);
 
-  this.sendAnchor = function(name, address, city, state, zip) {
+  this.sendAnchor = function(name, address, city, state, zip, mode) {
     var params = {
       name: name,
       address: address,
       city: city,
       state: state,
-      zip: zip
+      zip: zip,
+      travel_mode: mode
     }
     search.sendAnchor(params, function(data) {
       this.anchors.push(data.data);

@@ -62,6 +62,13 @@
     </select>
     <label for="anchor.zip">Zip Code:</label>
     <input class="inputText" type="number" ng-model="anchor.zip" min="00000" max="99999" placeholder="00000"required/>
+    <label for="anchor.travel_mode">Travel Mode:</label>
+      <select ng-init="anchor.travel_mode='driving'" ng-model="anchor.travel_mode">
+        <option value="driving">Driving</option>
+        <option value="transit">Public Transit</option>
+        <option value="bicycling">Bicycling</option>
+        <option value="walking">Walking</option>
+      </select>
     <button class="submitAnchor" ng-click="anchor.sendandclear()" type="submit">Save Anchor</button> 
     </form>
 </div>

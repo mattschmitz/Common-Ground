@@ -24,21 +24,10 @@
           </select>
           <label for="open_now">Open now</label>
           <input ng-init="query.open_now = true" type="checkbox" ng-model="query.open_now" checked='checked' value = true>
-        </fieldset>
-        
-        <fieldset>
-          <legend>Travel Options</legend>
-          <label for="travel_mode">Travel Mode:</label>
-          <select ng-init="query.travel_mode='driving'" ng-model="query.travel_mode">
-            <option value="driving">Driving</option>
-            <option value="transit">Public Transit</option>
-            <option value="bicycling">Bicycling</option>
-            <option value="walking">Walking</option>
-          </select>
           <label for="travel_time">Max Travel Time:</label>
           <input class="inputText" type="number" min="0" placeholder="0" ng-model="query.travel_time">
         </fieldset>
-        <button type="button" class="submitQuery" ng-click="query.getresults(query.search_term, query.price, query.rating, query.open_now, query.travel_mode, query.travel_time)">Find Places!</button> 
+        <button type="button" class="submitQuery" ng-click="query.getresults(query.search_term, query.price, query.rating, query.open_now, query.travel_time)">Find Places!</button> 
         </form>
     </div>
   </body>
