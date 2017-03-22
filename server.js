@@ -6,7 +6,7 @@ var yelp = require('./server/utils/yelpHelper');
 var gHelpers = require('./server/utils/gHelpers');
 var handler = require('./server/request-handler');
 var passport = require('passport');
-var session = require('express-session');
+// var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
 
@@ -20,12 +20,12 @@ app.use('/htmlTemplates', express.static(path.join(__dirname, '/htmlTemplates'))
 app.use('/server', express.static(path.join(__dirname, '/server')));
 app.use('/config', express.static(path.join(__dirname, '/config')));
 
+app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({secret: 'keyboard cat'}));
-app.use(flash());
-app.use(passport.initialize());
+// app.use(session({secret: 'keyboard cat'}));
 app.use(passport.session());
+app.use(flash());
 
 
 //this will call our crypto/serialization methods
@@ -62,6 +62,7 @@ app.post('/login', function(req, res, next) {
                                    failureRedirect: '/server',
                                    failureFlash: true })(req, res, next);
   }
+
 );
 
 
