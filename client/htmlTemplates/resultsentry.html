@@ -3,6 +3,8 @@
     <a href={{resultsEntry.result.url}} target="_blank"><h2>{{resultsEntry.result.name}}</h2></a>
     <img class="entryImg" ng-src={{resultsEntry.result.image_url}}>
     <div class="infoWindowBlock">
+      <span class="infoWindowLabel">Avg Travel Time:</span> {{resultsEntry.result.travelTimes.display}}
+      <br>
       <span class="infoWindowLabel">Address:</span> {{resultsEntry.result.location.display_address[0]}}
       <br>
       {{resultsEntry.result.location.display_address[1]}}</div>

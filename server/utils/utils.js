@@ -30,5 +30,29 @@ var findCentroid = function(coords){
   return [avgLat, avgLong];
 };
 
+/* Pulled formatPlural() and secondsToString() from https://gist.github.com/JoshOldenburg/5485454 */
+
+var formatPlural = function(val, singular, plural) {
+  if (val == 1) return val + singular;
+  return val + plural;
+}
+
+var secondsToString = function(seconds) {
+  var time = Math.round(seconds / 60);
+
+  if (time >= (60 * 24)) {
+    var days = Math.floor(time / (24 * 60));
+    var remaining = Math.floor(time % (24 * 60));
+    return formatPlural(days, ' day', ' days') + ', ' + minutesToString(remaining);
+  } else if (time >= 60) {
+    var hours = Math.floor(time / 60);
+    var minutes = time % 60;
+    return formatPlural(hours, ' hr', ' hrs') + ', ' + minutesToString(minutes);
+  } else {
+    return formatPlural(time, ' min', ' min');
+  }
+};
+
 module.exports.getMaximumDist = getMaximumDist;
 module.exports.findCentroid = findCentroid;
+module.exports.secondsToString = secondsToString;
