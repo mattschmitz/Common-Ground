@@ -40,10 +40,7 @@ exports.getResults = function(req, res){
 
 exports.addAnchor = function(req, res) {
   var address = req.body.address + ', ' + req.body.city + ', ' + req.body.state + ' ' + req.body.zip;
-  req.body = {
-    name: req.body.name,
-    address: address
-  };
+  req.body.fullAddress = address;
   gHelpers.geocode({address: address}, function(coords) {
     req.body.coordinates = coords;
     req.body.centroid = yelp.setSearchArea(req.body, function(data) {
