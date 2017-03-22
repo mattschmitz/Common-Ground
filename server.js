@@ -6,9 +6,10 @@ var yelp = require('./server/utils/yelpHelper');
 var gHelpers = require('./server/utils/gHelpers');
 var handler = require('./server/request-handler');
 var passport = require('passport');
-// var session = require('express-session');
+var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 var flash = require('connect-flash');
+var 
 
 var app = express();
 
@@ -23,19 +24,11 @@ app.use('/config', express.static(path.join(__dirname, '/config')));
 app.use(passport.initialize());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(session({secret: 'keyboard cat'}));
-app.use(passport.session());
 app.use(flash());
+app.use(session({secret: 'keyboard cat'}));
+app.use(passport.session());
 
 
-//this will call our crypto/serialization methods
-passport.serializeUser(function(user, done) {
-  done(null, "abc");
-});
-
-passport.deserializeUser(function(id, done) {
-  done(null, 'tyler');
-});
 
 
 //dummy strategy
@@ -43,14 +36,22 @@ passport.deserializeUser(function(id, done) {
 //else unsuccessful
 
 //in the future, we will query the database here
+//this will call our crypto/serialization methods
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(user, done) {
+  done(null, user);
+});
+
+//signup and login routes
+//choose redirect routes
+
 passport.use(new LocalStrategy(
   function(username, password, done) {
       if (username === 'tyler') { return done(null, 'tyler', {message: 'correct'})}
       else { return done(null, false, {message: 'in else'})}
-      
-
-
-    
   }
 ));
 
@@ -64,6 +65,18 @@ app.post('/login', function(req, res, next) {
   }
 
 );
+
+app.post('/signup', function (req, res) {
+  findUser(req.user.username).then(function(results) {
+    if(results[0]){
+      res.status(400).send()
+      return;
+    } else {
+      createUser(user)
+      res.status(200).send()
+    }
+  })
+})
 
 
 //add anchors to map and database

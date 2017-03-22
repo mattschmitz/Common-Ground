@@ -51,10 +51,10 @@ module.exports = {
 	createUser: createUser
 };
 
-var user = {
-	username: 'justinjyoo',
-	password: '123'
-}
+// var user = {
+// 	username: 'justinjyoo',
+// 	password: '123'
+// }
 
 
 // // example of how to create a user only if the username does not exist
