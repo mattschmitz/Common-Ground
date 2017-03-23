@@ -125,7 +125,6 @@ angular.module('etapartments')
     array = [];
   }.bind(this);
 
-  // Set watchers below
   // Wait for Yelp to return results which will trigger addPoints()
   $scope.$watch('gmap.results', function() {
     // If markers length > 0
@@ -168,5 +167,5 @@ angular.module('etapartments')
     // Once triggered, it will trigger a click event on the marker which will show the infowindow associated with that marker
     $window.google.maps.event.trigger(this.markers[index], 'click');
   }.bind(this));
-
+console.log('Map contoller finished...');
 })
