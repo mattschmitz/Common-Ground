@@ -53,4 +53,10 @@ angular.module('etapartments')
   this.deleteAnchor = function(index) {
     this.anchors.splice(index,1);
   }.bind(this);
+
+  $scope.$on('showResult', function(event, index) {
+    // Waits for an emit from resultsEntry with the index
+    // Then sends out a broadcast down to the map with the index
+    $scope.$broadcast('showResultOnMap', index);
+  })
 })
