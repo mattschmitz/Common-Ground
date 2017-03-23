@@ -158,14 +158,16 @@ angular.module('etapartments')
         // Set the center of the map to the most recent centroid
         $scope.map.setCenter($scope.gmap.anchors[$scope.gmap.anchors.length - 1].centroid);
         // Get current bounds of viewport
-        var bounds = $scope.map.getBounds();
+        var bounds = new $window.google.maps.LatLngBounds();
         // Loop through anchors
         for (var i = 0; i < $scope.gmap.anchors.length; i++) {
           // Extend the bounds to fit the anchor
           bounds.extend($scope.gmap.anchors[i].coordinates);
+          console.log(bounds);
         }
         // Set the bounds of the map to the newly extended bounds
         $scope.map.fitBounds(bounds);
+
       }
       // Finally, add all anchors
       this.addAnchors($scope.map, $scope.gmap.anchors);
