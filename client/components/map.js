@@ -26,6 +26,7 @@ angular.module('etapartments')
   this.lastWindow = null;
   this.markers = [];
   this.anchorsList = [];
+  this.bounds;
 
   this.addPoints = function (map, locations){
     // Clear markers array
@@ -35,14 +36,17 @@ angular.module('etapartments')
     // Loop through all locations
     for (i = 0; i < locations.length; i++) {  
       // Create a new marker object
+
+      var pos = {lat: locations[i].coordinates.latitude, lng: locations[i].coordinates.longitude}
       var marker = new $window.google.maps.Marker({
         // marker.map sets which map to set marker on
         // marker.position takes an object with lat, lng properties  
-        map: map, position: {lat: locations[i].coordinates.latitude, lng: locations[i].coordinates.longitude}, icon: '/client/images/marker.png' 
+        map: map, position: pos , icon: '/client/images/marker.png' 
       });
 
       // Store marker in markers array for later retrieval
       this.markers.push(marker);
+      this.bounds.extend(pos);
 
       // content is the HTML we want to render inside the infowindow
       var content = '<div class="infoWindow"><p><a class="infoWindowLink" href="' + locations[i].url + '" target="_blank"><h2>' + locations[i].name + '</h2></a></p><img class="infoWindowImg" src="' + locations[i].image_url + '"><div class="infoWindowBlock"><span class="infoWindowLabel">Address:</span> ' + locations[i].location.display_address[0] + '<br>' + locations[i].location.display_address[1] + '</div><br><div class="infoWindowBlock"><span class="infoWindowLabel">Phone:</span> ' + locations[i].display_phone + '</div></div>'
@@ -80,6 +84,7 @@ angular.module('etapartments')
 
       // Store marker in anchors array for later retrieval
       this.anchorsList.push(marker);
+      this.bounds.extend({lat: anchors[i].coordinates.lat, lng: anchors[i].coordinates.lng});
 
       // content is the HTML we want to render inside the infowindow
       var content = '<div class="infoWindow"><p><h2>' + anchors[i].name + '</h2></p><div class="infoWindowBlock"><span class="infoWindowLabel">Address:</span> ' + anchors[i].address + '</div></div>';
@@ -145,6 +150,8 @@ angular.module('etapartments')
       }
       // Then add new points
       this.addPoints($scope.map, $scope.gmap.results);
+      //adjust bounds when markers are added 
+      $scope.map.fitBounds(this.bounds);
     }.bind(this), true);
 
     $scope.$watch('gmap.anchors', function() {
@@ -158,15 +165,15 @@ angular.module('etapartments')
         // Set the center of the map to the most recent centroid
         $scope.map.setCenter($scope.gmap.anchors[$scope.gmap.anchors.length - 1].centroid);
         // Get current bounds of viewport
-        var bounds = new $window.google.maps.LatLngBounds();
+        this.bounds = new $window.google.maps.LatLngBounds();
         // Loop through anchors
         for (var i = 0; i < $scope.gmap.anchors.length; i++) {
           // Extend the bounds to fit the anchor
-          bounds.extend($scope.gmap.anchors[i].coordinates);
-          console.log(bounds);
+          this.bounds.extend($scope.gmap.anchors[i].coordinates);
+          console.log(this.bounds);
         }
         // Set the bounds of the map to the newly extended bounds
-        $scope.map.fitBounds(bounds);
+        $scope.map.fitBounds(this.bounds);
 
       }
       // Finally, add all anchors
