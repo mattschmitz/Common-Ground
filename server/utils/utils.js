@@ -30,7 +30,10 @@ var findCentroid = function(coords){
   return [avgLat, avgLong];
 };
 
-/* Pulled formatPlural() and secondsToString() from https://gist.github.com/JoshOldenburg/5485454 */
+/* 
+Pulled formatPlural() secondsToString() from https://gist.github.com/JoshOldenburg/5485454
+secondsToString() was modified to fit our needs
+ */
 
 var formatPlural = function(val, singular, plural) {
   if (val == 1) return val + singular;
@@ -38,18 +41,21 @@ var formatPlural = function(val, singular, plural) {
 }
 
 var secondsToString = function(seconds) {
-  var time = Math.round(seconds / 60);
 
-  if (time >= (60 * 24)) {
-    var days = Math.floor(time / (24 * 60));
-    var remaining = Math.floor(time % (24 * 60));
-    return formatPlural(days, ' day', ' days') + ', ' + minutesToString(remaining);
-  } else if (time >= 60) {
-    var hours = Math.floor(time / 60);
-    var minutes = time % 60;
-    return formatPlural(hours, ' hr', ' hrs') + ', ' + minutesToString(minutes);
+  if (seconds >= (86400)) {
+    var days = Math.floor(seconds / 86400);
+    var remaining = seconds % 86400;
+    return remaining > 0 ? formatPlural(days, ' day', ' days') + ', ' + secondsToString(remaining) : formatPlural(days, ' day', ' days');
+  } else if (seconds >= 3600) {
+    var hours = Math.floor(seconds / 3600);
+    var remaining = seconds % 3600;
+    return remaining > 0 ? formatPlural(hours, ' hr', ' hrs') + ', ' + secondsToString(remaining) : formatPlural(hours, ' hr', ' hrs');
+  } else if (seconds >= 60) {
+    var minutes = Math.floor(seconds / 60);
+    var remaining = seconds % 60;
+    return remaining > 0 ? formatPlural(minutes, ' min', ' min') + ', ' + secondsToString(remaining) : formatPlural(minutes, ' min', ' min');
   } else {
-    return formatPlural(time, ' min', ' min');
+    return formatPlural(seconds, ' sec', ' sec');
   }
 };
 
