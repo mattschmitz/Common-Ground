@@ -24,7 +24,7 @@
     var key = 'AIzaSyCrrF_JAPp0HljxaSSiJofc7g6zfr-WJSI';
     var s = document.createElement("script");
     s.type = "text/javascript";
-    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + key;
+    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + '&callback=initMaps';
     s.setAttribute('async', '');
     s.setAttribute('defer', '');
     document.getElementsByTagName('body')[0].appendChild(s);
