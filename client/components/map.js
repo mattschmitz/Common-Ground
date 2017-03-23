@@ -176,6 +176,6 @@ angular.module('etapartments')
       // Once triggered, it will trigger a click event on the marker which will show the infowindow associated with that marker
       $window.google.maps.event.trigger(this.markers[index], 'click');
     }.bind(this));
-
   }.bind(this);
+
 })

@@ -7,7 +7,7 @@ angular.module('etapartments')
     controllerAs: 'query',
     bindToController: true,
     controller: 'QueryBar',
-		templateUrl: 'client/htmlTemplates/queryBar.html'
+		templateUrl: 'client/htmlTemplates/querybar.html'
   }
 })
 
