@@ -126,7 +126,7 @@ angular.module('etapartments')
   }.bind(this);
 
   // Wait for the Google Maps API call to finish loading before trying to instantiate the maps object
-  $timeout(function() {
+ window.initMaps = function() {
     $scope.map = new $window.google.maps.Map(document.getElementById('mapWindow'), {
       center: this.options.start,
       minZoom: this.options.minZoom,
@@ -177,5 +177,5 @@ angular.module('etapartments')
       $window.google.maps.event.trigger(this.markers[index], 'click');
     }.bind(this));
 
-  }.bind(this), 100);
+  }.bind(this);
 })

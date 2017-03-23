@@ -9,7 +9,7 @@ angular.module('etapartments')
 	}
 })
 
-.controller('AppCtrl', function($scope, $window, search) {
+.controller('AppCtrl', function($scope, $window, $timeout, search) {
   this.list = [];
   this.anchors = [];
   this.center = {};
