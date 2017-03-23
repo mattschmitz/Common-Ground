@@ -125,57 +125,48 @@ angular.module('etapartments')
     array = [];
   }.bind(this);
 
-  // Wait for the Google Maps API call to finish loading before trying to instantiate the maps object
- window.initMaps = function() {
-    $scope.map = new $window.google.maps.Map(document.getElementById('mapWindow'), {
-      center: this.options.start,
-      minZoom: this.options.minZoom,
-      maxZoom: this.options.maxZoom,
-      zoom: this.options.zoom
-    })
+  // Set watchers below
+  // Wait for Yelp to return results which will trigger addPoints()
+  $scope.$watch('gmap.results', function() {
+    // If markers length > 0
+    if (this.markers.length > 0) {
+      // We need to delete markers
+      this.deleteMarkers(this.markers);
+      // Then recenter map accordingly
+      $window.map.setCenter($scope.gmap.center)
+    }
+    // Then add new points
+    this.addPoints($window.map, $scope.gmap.results);
+  }.bind(this), true);
 
-    // Wait for Yelp to return results which will trigger addPoints()
-    $scope.$watch('gmap.results', function() {
-      // If markers length > 0
-      if (this.markers.length > 0) {
-        // We need to delete markers
-        this.deleteMarkers(this.markers);
-        // Then recenter map accordingly
-        $scope.map.setCenter($scope.gmap.center)
+  $scope.$watch('gmap.anchors', function() {
+    // If anchors are already rendered
+    if (this.anchorsList.length > 0) {
+      // Delete all anchors
+      this.deleteMarkers(this.anchorsList);
+    }
+    // If anchors need to be rendered
+    if ($scope.gmap.anchors.length > 0) {
+      // Set the center of the map to the most recent centroid
+      $window.map.setCenter($scope.gmap.anchors[$scope.gmap.anchors.length - 1].centroid);
+      // Get current bounds of viewport
+      var bounds = $window.map.getBounds();
+      // Loop through anchors
+      for (var i = 0; i < $scope.gmap.anchors.length; i++) {
+        // Extend the bounds to fit the anchor
+        bounds.extend($scope.gmap.anchors[i].coordinates);
       }
-      // Then add new points
-      this.addPoints($scope.map, $scope.gmap.results);
-    }.bind(this), true);
+      // Set the bounds of the map to the newly extended bounds
+      $window.map.fitBounds(bounds);
+    }
+    // Finally, add all anchors
+    this.addAnchors($window.map, $scope.gmap.anchors);
+  }.bind(this), true);
 
-    $scope.$watch('gmap.anchors', function() {
-      // If anchors are already rendered
-      if (this.anchorsList.length > 0) {
-        // Delete all anchors
-        this.deleteMarkers(this.anchorsList);
-      }
-      // If anchors need to be rendered
-      if ($scope.gmap.anchors.length > 0) {
-        // Set the center of the map to the most recent centroid
-        $scope.map.setCenter($scope.gmap.anchors[$scope.gmap.anchors.length - 1].centroid);
-        // Get current bounds of viewport
-        var bounds = $scope.map.getBounds();
-        // Loop through anchors
-        for (var i = 0; i < $scope.gmap.anchors.length; i++) {
-          // Extend the bounds to fit the anchor
-          bounds.extend($scope.gmap.anchors[i].coordinates);
-        }
-        // Set the bounds of the map to the newly extended bounds
-        $scope.map.fitBounds(bounds);
-      }
-      // Finally, add all anchors
-      this.addAnchors($scope.map, $scope.gmap.anchors);
-    }.bind(this), true);
-
-    $scope.$on('showResultOnMap', function(event, index) {
-      // This waits for a 'showResultOnMap' broadcast from app
-      // Once triggered, it will trigger a click event on the marker which will show the infowindow associated with that marker
-      $window.google.maps.event.trigger(this.markers[index], 'click');
-    }.bind(this));
-  }.bind(this);
+  $scope.$on('showResultOnMap', function(event, index) {
+    // This waits for a 'showResultOnMap' broadcast from app
+    // Once triggered, it will trigger a click event on the marker which will show the infowindow associated with that marker
+    $window.google.maps.event.trigger(this.markers[index], 'click');
+  }.bind(this));
 
 })

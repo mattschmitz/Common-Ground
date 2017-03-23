@@ -9,10 +9,10 @@
   <app></app>
   <script src="/client/components/index.js"></script>
   <script src="/client/components/app.js"></script>
+  <script src="/client/components/map.js"></script>
   <script src="/client/components/userNav.js"></script>
   <script src="/client/components/anchorBar.js"></script>
   <script src="/client/components/queryBar.js"></script>
-  <script src="/client/components/map.js"></script>
   <script src="/client/components/resultslist.js"></script>
   <script src="/client/components/resultsentry.js"></script>
   <script src="/client/components/anchorslist.js"></script>
@@ -29,6 +29,15 @@
     s.setAttribute('async', '');
     s.setAttribute('defer', '');
     document.getElementsByTagName('body')[0].appendChild(s);
+  }
+
+  function initMaps() {
+    window.map = new window.google.maps.Map(document.getElementById('mapWindow'), {
+      center: {lng: -122.41, lat: 37.78},
+      minZoom: 5,
+      maxZoom: 19,
+      zoom: 11
+    })
   }
   window.onload = initialize();
   </script>
