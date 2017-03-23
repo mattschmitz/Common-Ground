@@ -4,6 +4,15 @@
   "scripts": {
   },
   "env": {
+    "YELP_API_KEY": {
+      "required": true
+    },
+    "G_MAPS_CLIENT_API_KEY": {
+      "required": true
+    },
+    "G_MAPS_API_KEY": {
+      "required": true
+    }
   },
   "formation": {
   },
