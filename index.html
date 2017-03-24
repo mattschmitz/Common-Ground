@@ -31,11 +31,11 @@
   }
 
   function initMap() {
-    // if (window.createMap === undefined) {
-    //   setTimeout(initMap, 100);
-    // } else {
+    if (window.createMap === undefined) {
+      setTimeout(initMap, 100);
+    } else {
       window.createMap();
-    // }
+    }
   }
 
   window.onload = initialize;
