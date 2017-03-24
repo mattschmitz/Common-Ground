@@ -12,6 +12,7 @@
   <script src="/client/components/userNav.js"></script>
   <script src="/client/components/anchorBar.js"></script>
   <script src="/client/components/queryBar.js"></script>
+  <script src="/client/components/map.js"></script>
   <script src="/client/components/resultslist.js"></script>
   <script src="/client/components/resultsentry.js"></script>
   <script src="/client/components/anchorslist.js"></script>
@@ -30,14 +31,13 @@
   }
 
   function initMap() {
-    if (window.createMap === undefined) {
-      setTimeout(initMap, 100);
-    } else {
+    // if (window.createMap === undefined) {
+    //   setTimeout(initMap, 100);
+    // } else {
       window.createMap();
-    }
+    // }
   }
 
   window.onload = initialize;
   </script>
-  <script src="/client/components/map.js"></script>
 </html>
