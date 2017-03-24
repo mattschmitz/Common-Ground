@@ -33,13 +33,18 @@
   }
 
   function initMaps() {
-    console.log(document.getElementById('mapWindow'));
-    window.maps = new window.google.maps.Map(document.getElementById('mapWindow'), {
-      center: {lng: -122.41, lat: 37.78},
-      minZoom: 5,
-      maxZoom: 19,
-      zoom: 11
-    })
+    var el = document.getElementById('mapWindow')
+    console.log(el);
+    if (el === null) {
+      setTimeout(initMaps, 100);
+    } else { 
+      window.maps = new window.google.maps.Map(document.getElementById('mapWindow'), {
+        center: {lng: -122.41, lat: 37.78},
+        minZoom: 5,
+        maxZoom: 19,
+        zoom: 11
+      })
+    }
   }
   document.body.onload = initialize;
   </script>
