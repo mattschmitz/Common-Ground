@@ -32,6 +32,7 @@
   }
 
   function initMaps() {
+    console.log(document.getElementById('mapWindow'));
     window.maps = new window.google.maps.Map(document.getElementById('mapWindow'), {
       center: {lng: -122.41, lat: 37.78},
       minZoom: 5,
