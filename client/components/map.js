@@ -49,8 +49,8 @@ angular.module('etapartments')
       this.bounds.extend(pos);
 
       // content is the HTML we want to render inside the infowindow
-      var content = '<div class="infoWindow"><p><a class="infoWindowLink" href="' + locations[i].url + '" target="_blank"><h2>' + locations[i].name + '</h2></a></p><img class="infoWindowImg" src="' + locations[i].image_url + '"><div class="infoWindowBlock"><span class="infoWindowLabel">Address:</span> ' + locations[i].location.display_address[0] + '<br>' + locations[i].location.display_address[1] + '</div><br><div class="infoWindowBlock"><span class="infoWindowLabel">Phone:</span> ' + locations[i].display_phone + '</div></div>'
-
+      // var content = '<div class="infoWindow"><p><a class="infoWindowLink" href="' + locations[i].url + '" target="_blank"><h4>' + locations[i].name + '</h4></a></p><img class="infoWindowImg" src="' + locations[i].image_url + '"><div class="infoWindowBlock"><span class="infoWindowLabel">Address:</span> ' + locations[i].location.display_address[0] + '<br>' + locations[i].location.display_address[1] + '</div><br><div class="infoWindowBlock"><span class="infoWindowLabel">Phone:</span> ' + locations[i].display_phone + '</div></div>'
+      var content = '<a href=' + locations[i].url + 'target="_blank"><h4>' + locations[i].name + '</h4></a><br><div class="row"><div class="col-md-4"><img class="entryImg pull-left" src=' + locations[i].image_url + '></div><div class="col-md-6"><address><strong>Address</strong><br>' + locations[i].location.display_address[0] + '<br>' + locations[i].location.display_address[1] + '<br><strong>Phone</strong><br>' + locations[i].display_phone + '</address></div></div>'
       // Create InfoWindow object   
       var infowindow = new $window.google.maps.InfoWindow();
 
