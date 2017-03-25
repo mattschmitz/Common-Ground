@@ -126,7 +126,7 @@ angular.module('etapartments')
   }.bind(this);
 
   // Wait for the Google Maps API call to finish loading before trying to instantiate the maps object
- window.initMaps = function() {
+ window.createMap = function() {
     $scope.map = new $window.google.maps.Map(document.getElementById('mapWindow'), {
       center: this.options.start,
       minZoom: this.options.minZoom,
@@ -176,6 +176,6 @@ angular.module('etapartments')
       // Once triggered, it will trigger a click event on the marker which will show the infowindow associated with that marker
       $window.google.maps.event.trigger(this.markers[index], 'click');
     }.bind(this));
-  }.bind(this);
 
+  }.bind(this);
 })
