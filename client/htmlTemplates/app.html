@@ -11,14 +11,14 @@
 	</div>
 	<div id="queryBar" class="col-md-12">
     <h3>Find Common Ground</h3>
-		<query-bar getresults="app.getYelpResults"></query-bar>
+		<query-bar filterresults="app.filterChange" getresults="app.getYelpResults"></query-bar>
 	</div>
   <div class="row map-container">
     <div class="map-outer col-md-8">
-      <map-display results="app.list" center="app.center" anchors="app.anchors"></map-display>
+      <map-display results="app.filteredList" center="app.center" anchors="app.anchors"></map-display>
     </div>
     <div id="resultsListContainer" class="col-md-4">
-      <results-list results="app.list"></results-list>
+      <results-list results="app.filteredList"></results-list>
     </div>
   </div>
 </div>

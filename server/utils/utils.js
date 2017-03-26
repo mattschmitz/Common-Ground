@@ -78,3 +78,4 @@ var haversine = function() {
 module.exports.getMaximumDist = getMaximumDist;
 module.exports.findCentroid = findCentroid;
 module.exports.secondsToString = secondsToString;
+module.exports.max = max;
