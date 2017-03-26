@@ -1,34 +1,36 @@
-<!DOCTYPE HTML>
-<html>
-  <body>
-    <div class="queryBar">
-      <form>
-        <fieldset>
-        <legend>Find Common Ground</legend>
-        <label for="search_term">Search for:</label>
-          <input class="inputText" type="text" ng-model="query.search_term" placeholder="Restaurants, bars, food...">
-          <label for="price">Price:</label>
-          <select ng-model="query.price">
-            <option value = 1>$</option>
-            <option value = 2>$$</option>
-            <option value = 3>$$$</option>
-            <option value = 4>$$$$</option>
-          </select>
-          <label for="rating">Rating:</label>
-          <select ng-model="query.rating">
-            <option value = 1>1 star</option>
-            <option value = 2>2 stars</option>
-            <option value = 3>3 stars</option>
-            <option value = 4>4 stars</option>
-            <option value = 5>5 stars</option>
-          </select>
-          <label for="open_now">Open now</label>
-          <input ng-init="query.open_now = true" type="checkbox" ng-model="query.open_now" checked='checked' value = true>
-          <label for="travel_time">Max Travel Time:</label>
-          <input class="inputText" type="number" min="0" placeholder="0" ng-model="query.travel_time">
-        </fieldset>
-        <button type="button" class="submitQuery" ng-click="query.getresults(query.search_term, query.price, query.rating, query.open_now, query.travel_time)">Find Places!</button> 
-        </form>
-    </div>
-  </body>
-</html>
+<form class="form-inline">
+  <div class="form-group">
+    <label for="query.search_term">Search for:</label>
+    <input class="form-control" type="text" ng-model="query.search_term" placeholder="Restaurants, bars, food...">
+  </div>
+  <div class="form-group">
+    <label for="query.price">Price:</label>
+    <select class="form-control" ng-model="query.price">
+      <option value = 1>$</option>
+      <option value = 2>$$</option>
+      <option value = 3>$$$</option>
+      <option value = 4>$$$$</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="query.rating">Rating:</label>
+    <select class="form-control" ng-model="query.rating">
+      <option value = 1>1 star</option>
+      <option value = 2>2 stars</option>
+      <option value = 3>3 stars</option>
+      <option value = 4>4 stars</option>
+      <option value = 5>5 stars</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label class = checkbox-inlinefor="query.open_now">Open now:</label>
+    <input ng-init="query.open_now = true" type="checkbox" ng-model="query.open_now" checked='checked' value = true>
+  </div>
+  <div class="form-group">
+    <label for="travel_time">Max Travel Time:</label>
+    <input class="form-control" type="number" min="0" placeholder="0" ng-model="query.travel_time">
+  </div>
+  <div class="form-group">
+    <button id="findPlaces" type="button" class="btn btn-default" ng-click="query.getresults(query.search_term, query.price, query.rating, query.open_now, query.travel_time)">Find Places!</button> 
+  </div>
+</form>

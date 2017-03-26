@@ -2,17 +2,23 @@
 	<div id="userNav">
 		<user-nav></user-nav>
 	</div>
-	<div id="anchorBar">
-		<anchor-bar sendanchor="app.sendAnchor"></anchor-bar>
-    <anchors-list anchors="app.anchors" delete="app.deleteAnchor"></anchors-list>
+	<div id="anchorBar" class="col-md-12">
+    <h3>Set Your Anchors    <span id="anchorCaret" class="caret hidden"></span></h3>
+    <div id="anchorInput">
+		  <anchor-bar sendanchor="app.sendAnchor"></anchor-bar>
+      <anchors-list anchors="app.anchors" delete="app.deleteAnchor"></anchors-list>
+    </div>
 	</div>
-	<div id="queryBar">
+	<div id="queryBar" class="col-md-12">
+    <h3>Find Common Ground</h3>
 		<query-bar getresults="app.getYelpResults"></query-bar>
 	</div>
-  <div id="mapWindow">
-    <map-display results="app.list" center="app.center" anchors="app.anchors"></map-display>
-  </div>
-  <div id="resultsListContainer">
-    <results-list results="app.list"></results-list>
+  <div class="row map-container">
+    <div class="map-outer col-md-8">
+      <map-display results="app.list" center="app.center" anchors="app.anchors"></map-display>
+    </div>
+    <div id="resultsListContainer" class="col-md-4">
+      <results-list results="app.list"></results-list>
+    </div>
   </div>
 </div>

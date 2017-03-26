@@ -29,8 +29,9 @@ exports.getResults = function(req, res){
   //     travel_time: 10 
   //   } 
   // }
-  
   yelp.getBusinesses(req.body.yelpParams, function(yelpResults) {
+    // Temporary work around
+    // res.send(yelpResults);
     rankLocations(yelpResults, req.body.anchors, req.body.travelParams, function(rankedResults){
       res.send(rankedResults);
     });
@@ -41,6 +42,9 @@ exports.getResults = function(req, res){
 exports.addAnchor = function(req, res) {
   var address = req.body.address + ', ' + req.body.city + ', ' + req.body.state + ' ' + req.body.zip;
   req.body.fullAddress = address;
+  req.body.splitAddress = [];
+  req.body.splitAddress.push(req.body.address);
+  req.body.splitAddress.push([req.body.city,req.body.state,req.body.zip].join(', '));
   gHelpers.geocode({address: address}, function(coords) {
     req.body.coordinates = coords;
     req.body.centroid = yelp.setSearchArea(req.body, function(data) {
