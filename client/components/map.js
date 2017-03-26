@@ -170,7 +170,6 @@ angular.module('etapartments')
         for (var i = 0; i < $scope.gmap.anchors.length; i++) {
           // Extend the bounds to fit the anchor
           this.bounds.extend($scope.gmap.anchors[i].coordinates);
-          console.log(this.bounds);
         }
         // Set the bounds of the map to the newly extended bounds
         $scope.map.fitBounds(this.bounds);
