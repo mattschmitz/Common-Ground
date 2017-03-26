@@ -13,7 +13,11 @@ var setSearchArea = function(anchor, callback) {
     centroid = coordinates[0];
   } else {
     centroid = utils.findCentroid(coordinates);
-    radius = 1000 * utils.getMaximumDist(coordinates);
+    // utils.getMaximumDist returns a radius
+    // We want to limit the max radius to 40000m, but also have a min of 1000m
+    // Math.min takes the smaller of the calc radius or 40000
+    // Math.max takes the larger of the calc radius or 1000
+    radius = Math.max(Math.min(utils.getMaximumDist(coordinates), 40000), 1000);
   }
   if (callback) {
     anchor.centroid = {lat: centroid[0], lng: centroid[1]};
