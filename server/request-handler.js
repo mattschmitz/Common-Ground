@@ -31,10 +31,10 @@ exports.getResults = function(req, res){
   // }
   yelp.getBusinesses(req.body.yelpParams, function(yelpResults) {
     // Temporary work around
-    res.send(yelpResults);
-    // rankLocations(yelpResults, req.body.anchors, req.body.travelParams, function(rankedResults){
-    //   res.send(rankedResults);
-    // });
+    // res.send(yelpResults);
+    rankLocations(yelpResults, req.body.anchors, req.body.travelParams, function(rankedResults){
+      res.send(rankedResults);
+    });
   });
 }
 
