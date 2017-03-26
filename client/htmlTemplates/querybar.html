@@ -14,7 +14,7 @@
   </div>
   <div class="form-group">
     <label for="query.rating">Rating:</label>
-    <select class="form-control" ng-model="query.rating">
+    <select ng-change="query.filterresults(query.travel_time, query.rating)" class="form-control" ng-model="query.rating">
       <option value = 1>1 star</option>
       <option value = 2>2 stars</option>
       <option value = 3>3 stars</option>
@@ -27,8 +27,8 @@
     <input ng-init="query.open_now = true" type="checkbox" ng-model="query.open_now" checked='checked' value = true>
   </div>
   <div class="form-group">
-    <label for="travel_time">Max Travel Time:</label>
-    <input class="form-control" type="number" min="0" placeholder="0" ng-model="query.travel_time">
+    <label for="query.travel_time">Max Travel Time:</label>
+    <input ng-change="query.filterresults(query.travel_time, query.rating)" class="form-control" type="number" min="0" placeholder="0" ng-model="query.travel_time">
   </div>
   <div class="form-group">
     <button id="findPlaces" type="button" class="btn btn-default" ng-click="query.getresults(query.search_term, query.price, query.rating, query.open_now, query.travel_time)">Find Places!</button> 

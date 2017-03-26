@@ -13,8 +13,9 @@ angular.module('etapartments')
   this.list = [];
   this.anchors = [];
   this.center = {};
+  this.filteredList = [];
 
-  this.getYelpResults = function(term, price, rating, open, travel_mode, travel_time) {
+  this.getYelpResults = function(term, price, rating, open, travel_time) {
     // Create object
     var params = {
       anchors: this.anchors,
@@ -31,7 +32,33 @@ angular.module('etapartments')
     search.query(params, function(data) {
         this.list = data.businesses;
         this.center = data.centroid;
+        this.filteredList = this.filterResults(this.list, travel_time, rating);
     }.bind(this));
+  }.bind(this);
+
+  this.filterResults = function(originalList, travel_time, rating) {
+    // Ensure we don't mutate original array
+    var oldResults = originalList.slice();
+    var newResults = [];
+
+    if (travel_time === undefined && rating === undefined) {
+      return oldResults;
+    } else {
+      for (var i = 0; i < oldResults.length; i++) {
+        if (travel_time !== undefined && oldResults[i].travelTimes.max > (travel_time * 60)) {
+          continue;
+        } else if (rating !== undefined && rating > oldResults[i].rating) {
+          continue;
+        } else {
+          newResults.push(oldResults[i]);
+        }
+      }
+      return newResults;
+    }
+  }
+
+  this.filterChange = function(travel_time, rating) {
+    this.filteredList = this.filterResults(this.list, travel_time, rating);
   }.bind(this);
 
   this.sendAnchor = function(name, address, city, state, zip, mode) {

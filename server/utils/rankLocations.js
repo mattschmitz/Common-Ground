@@ -41,12 +41,13 @@ module.exports = function(yelpData, anchors, travelParams, cb) {
         
         _.each(bizes, function(biz, i) {
           var times = timesMatrix[i];
+          var max = util.max(times);
           var avg = math.round(math.mean(times));
           var std = math.round(math.std(times, 'uncorrected'));
           var rank = math.round(getRank(avg, std));
           var display = util.secondsToString(avg);
 
-          biz.travelTimes = {times: times, avg: avg, std: std, rank: rank, display: display};
+          biz.travelTimes = {times: times, max: max, avg: avg, std: std, rank: rank, display: display};
           // console.log(biz.travelTimes);
         });
 
