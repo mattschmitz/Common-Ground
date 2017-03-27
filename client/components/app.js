@@ -62,7 +62,7 @@ angular.module('etapartments')
   }.bind(this);
 
   this.sendAnchor = function(name, address, city, state, zip, mode) {
-    var params = {
+    var anchor = {
       name: name,
       address: address,
       city: city,
@@ -70,8 +70,12 @@ angular.module('etapartments')
       zip: zip,
       travel_mode: mode
     }
-    search.sendAnchor(params, function(data) {
-      this.anchors.push(data.data);
+    anchor.fullAddress = anchor.address + ', ' + anchor.city + ', ' + anchor.state + ' ' + anchor.zip;
+    anchor.splitAddress = [anchor.address, anchor.city + ', ' + anchor.state + ' ' + anchor.zip];
+    var anchors = this.anchors.slice();
+    anchors.push(anchor);
+    search.sendAnchor(anchors, function(data) {
+      this.anchors = data.data;
       // Should recenter map based on centroid of last anchor object
       // Should display all anchors
     }.bind(this))

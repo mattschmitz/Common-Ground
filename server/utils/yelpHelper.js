@@ -7,11 +7,16 @@ var centroid = [37.7836966, -122.4089664];
 var anchors = [];
 var coordinates = [];
 
-var setSearchArea = function(anchor, callback) {
-  coordinates.push([anchor.coordinates.lat, anchor.coordinates.lng]);
-  if (coordinates.length === 1) {
-    centroid = coordinates[0];
+var setSearchArea = function(anchors, callback) {
+  // anchors is an array of anchor objects
+  // anchor.coordinates has an object with properties lat and lng: {lat: 37.7836966, lng: -122.4089664}
+  if (anchors.length === 1) {
+    centroid = anchors[0].coordinates;
   } else {
+    var coordinates = [];
+    for (var i = 0; i < anchors.length; i++) {
+      coordinates.push([anchors[i].coordinates.lat, anchors[i].coordinates.lng]);
+    }
     centroid = utils.findCentroid(coordinates);
     // utils.getMaximumDist returns a radius
     // We want to limit the max radius to 40000m, but also have a min of 1000m
@@ -20,20 +25,19 @@ var setSearchArea = function(anchor, callback) {
     radius = Math.max(Math.min(utils.getMaximumDist(coordinates), 40000), 1000);
   }
   if (callback) {
-    anchor.centroid = {lat: centroid[0], lng: centroid[1]};
-    anchors.push(anchor);
-    callback(anchor);
+    anchors[anchors.length - 1].centroid = centroid;
+    anchors[anchors.length - 1].radius = radius;
+    callback(anchors);
   }
 }
 
 var getBusinesses = function(params, callback) {
-
-//params[radius] = radius
+var last = params.anchors[params.anchors.length - 1];
 
 var options = { 
   method: 'GET',
   url: 'https://api.yelp.com/v3/businesses/search',
-  qs: _.extend(params, {latitude: centroid[0], longitude: centroid[1], radius: radius}), //extend paramaters with radius and centroid
+  qs: _.extend(params.yelpParams, {latitude: last.centroid.lat, longitude: last.centroid.lng, radius: last.radius}), //extend paramaters with radius and centroid
   headers: 
    { 'postman-token': '5073d720-9247-c291-f3cf-3701c76aca74',
      'cache-control': 'no-cache',

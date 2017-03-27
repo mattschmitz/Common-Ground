@@ -26,7 +26,6 @@ angular.module('etapartments')
   this.lastWindow = null;
   this.markers = [];
   this.anchorsList = [];
-  this.bounds;
 
   this.addPoints = function (map, locations){
     // Clear markers array
@@ -139,6 +138,8 @@ angular.module('etapartments')
       zoom: this.options.zoom
     })
 
+    this.bounds = new $window.google.maps.LatLngBounds();
+
     // Wait for Yelp to return results which will trigger addPoints()
     $scope.$watch('gmap.results', function() {
       // If markers length > 0
@@ -150,8 +151,10 @@ angular.module('etapartments')
       }
       // Then add new points
       this.addPoints($scope.map, $scope.gmap.results);
-      //adjust bounds when markers are added 
-      $scope.map.fitBounds(this.bounds);
+      //adjust bounds when markers are added
+      if (this.markers.length > 0) {
+        $scope.map.fitBounds(this.bounds);
+      }
     }.bind(this), true);
 
     $scope.$watch('gmap.anchors', function() {
