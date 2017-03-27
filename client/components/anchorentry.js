@@ -13,6 +13,12 @@ angular.module('etapartments')
   }
 })
 
-.controller('AnchorEntryCtrl', function() {
-
+.controller('AnchorEntryCtrl', function(sendDelete, $q) {
+  this.onDeleteClick = function (params) {
+    return $q(function(resolve, reject) {
+      sendDelete.sendDeletedAnchor(params, function(err, results) {
+          resolve(results)
+      })
+    }).then(this.delete(this.aindex))
+  }
 });

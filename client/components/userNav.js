@@ -1,34 +1,53 @@
 angular.module('etapartments')
 .directive('userNav', function() {
 	return {
-    scope: {},
-    controllerAs: 'userNav',
-    bindToController: true,
-    controller: 'userNavCtrl',
+	    scope: {
+	    	loginuser: '<'
+	    },
+	    controllerAs: 'userNav',
+	    bindToController: true,
+	    controller: 'userNavCtrl',
 		templateUrl: 'client/htmlTemplates/userNav.html',
 	}
 })
 .controller('userNavCtrl', function(auth) {
-	this.displayMessage = false;
-	this.setState = function(err, user) {
+	this.displayLoginMessage = false;
+	this.displaySignupMessage = false;
+	this.setLoginState = function(err, user) {
 		if (err) {
-			this.displayMessage = true;
+			this.displayLoginMessage = true;
+			this.displaySignupMessage = false
 		} else if (user) {
-			this.displayMessage = false;
+			this.displayLoginMessage = false;
+			this.displaySignupMessage = false
 		}
 	}.bind(this);
-	this.logIn= function() {
+
+	this.setSignupState = function(err, user) {
+		if (err) {
+			this.displaySignupMessage = true;
+			this.displayLoginMessage = false;
+		} else if (user) {
+			this.displaySignupMessage = false;
+			this.displayLoginMessage = false;
+		}
+	}.bind(this);
+
+	this.logIn = function() {
 		var user = {
 			username: this.username,
 			password: this.password
 		};
-		auth.logIn(user, this.setState);
+		this.loginuser(user, this.setLoginState);
+	};
+	this.logOut = function() {
+		auth.logOut();
 	};
 	this.signUp = function() {
 		var user = {
 			username: this.username,
 			password: this.password
 		};
-		auth.signUp(user, this.setState);
+		auth.signUp(user, this.setSignupState);
 	};
 })

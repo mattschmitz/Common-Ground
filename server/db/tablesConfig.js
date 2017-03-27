@@ -20,10 +20,14 @@ module.exports = function (db) {
 	}).then(function () {
 		console.log('start anchor table!')
 		return db.query(' \
-				CREATE TABLE IF NOT EXISTS anchor ( \
+				CREATE TABLE IF NOT EXISTS anchors ( \
 				id SERIAL PRIMARY KEY, \
-				anchor_name VARCHAR(25), \
-				anchor_location VARCHAR(25) \
+				username VARCHAR(25), \
+				travel_mode VARCHAR(25), \
+				anchor_name VARCHAR(255), \
+				anchor_coordinates VARCHAR(255), \
+				anchor_address VARCHAR(255), \
+				anchor_splitAddress VARCHAR(255) [] \
 				); \
 			')
 	})

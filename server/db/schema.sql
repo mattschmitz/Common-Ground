@@ -17,8 +17,9 @@ CREATE TABLE IF NOT EXISTS sessions (
 	salt VARCHAR(255) --SALT for hashed session id
 );
 
-CREATE TABLE IF NOT EXISTS anchor (
+CREATE TABLE IF NOT EXISTS anchors (
 	id INTEGER PRIMARY KEY,
+	username VARCHAR(25),
 	anchor_name VARCHAR(25), --anchor name
-	anchor_location VARCHAR(25) --anchor location
+	anchor_location VARCHAR(255) --anchor location
 );
