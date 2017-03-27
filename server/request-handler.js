@@ -40,14 +40,14 @@ exports.getResults = function(req, res){
 
 
 exports.addAnchor = function(req, res) {
-  var address = req.body.address + ', ' + req.body.city + ', ' + req.body.state + ' ' + req.body.zip;
-  req.body.fullAddress = address;
+  var fullAddress = req.body.address + ', ' + req.body.city + ', ' + req.body.state + ' ' + req.body.zip;
+  req.body.fullAddress = fullAddress;
   req.body.splitAddress = [];
   req.body.splitAddress.push(req.body.address);
   req.body.splitAddress.push([req.body.city,req.body.state,req.body.zip].join(', '));
   gHelpers.geocode({address: address}, function(coords) {
     req.body.coordinates = coords;
-    req.body.centroid = yelp.setSearchArea(req.body, function(data) {
+    yelp.setSearchArea(req.body, function(data) {
       res.send(data);
     });
   })
