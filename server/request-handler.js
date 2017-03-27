@@ -45,7 +45,7 @@ exports.addAnchor = function(req, res) {
   req.body.splitAddress = [];
   req.body.splitAddress.push(req.body.address);
   req.body.splitAddress.push([req.body.city,req.body.state,req.body.zip].join(', '));
-  gHelpers.geocode({address: address}, function(coords) {
+  gHelpers.geocode({address: fullAddress}, function(coords) {
     req.body.coordinates = coords;
     yelp.setSearchArea(req.body, function(data) {
       res.send(data);
