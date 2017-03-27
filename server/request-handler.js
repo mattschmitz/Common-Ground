@@ -36,6 +36,7 @@ exports.getResults = function(req, res){
   });
 }
 
+var anchors = [];
 
 exports.addAnchor = function(req, res) {
   var fullAddress = req.body.address + ', ' + req.body.city + ', ' + req.body.state + ' ' + req.body.zip;
@@ -45,7 +46,12 @@ exports.addAnchor = function(req, res) {
   req.body.splitAddress.push([req.body.city,req.body.state,req.body.zip].join(', '));
   gHelpers.geocode({address: fullAddress}, function(coords) {
     req.body.coordinates = coords;
-    yelp.setSearchArea(req.body, function(data) {
+    // setSearchArea should take an array, not single object
+    // TODO: get user's anchors from DB and add new anchor onto it
+    // yelp.setSearchArea should be the call back to the DB insert
+    // Currently using local, non-persistent storage at line 39
+    anchors.push(req.body);
+    yelp.setSearchArea(anchors, function(data) {
       res.send(data);
     });
   })
