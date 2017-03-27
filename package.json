@@ -4,7 +4,7 @@
   "description": "Find apartments based on time-to-travel to destinations important to you",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
