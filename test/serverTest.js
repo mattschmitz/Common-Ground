@@ -14,13 +14,13 @@ describe('utils', function(){
   it('should calculate a centroid given several coordinates', function(){
     var testCoords = [[0,0], [2,2], [0,2], [2,0]];
     var centroid = utils.findCentroid(testCoords);
-    expect(centroid).to.deep.equal([1,1]);
+    expect(centroid).to.deep.equal({ lat: 1, lng: 1 });
   });
 
   it('should calculate a centroid given a single coordinate', function(){
     var testCoords = [[2,2]];
     var centroid = utils.findCentroid(testCoords);
-    expect(centroid).to.deep.equal([2,2]);
+    expect(centroid).to.deep.equal({ lat: 2, lng: 2 });
   });
 
   it('should return the distance between two points', function() {
@@ -108,14 +108,14 @@ describe('anchors', function() {
   it('should accept anchors', function(done) {
     server
     .post('/anchor')
-    .send({ 
-      name: 'Mathias',
-      address: '23 Pearl St.',
-      city: 'San Francisco',
-      state: 'CA',
-      zip: 94103,
-      travel_mode: 'driving' 
-      })
+    .send([ { name: '23 Pearl St',
+    address: '23 Pearl Street',
+    city: 'San Francisco',
+    state: 'CA',
+    zip: 94103,
+    travel_mode: 'driving',
+    fullAddress: '23 Pearl Street, San Francisco, CA 94103',
+    splitAddress: [ '23 Pearl Street', 'San Francisco, CA 94103' ] } ])
     .expect(200)
     .end(done);
   });
@@ -136,21 +136,3 @@ describe('anchors', function() {
 //     });
 //   });
 // })
-
-
-
-
-  // var findCentroid = function(coords){
-  //   var numCords = coords.length;
-
-  //   var sumLats = 0, sumLongs = 0;
-  //   for (var i = 0; i < numCords; i++) {
-  //     sumLats += coords[i][0];
-  //     sumLongs += coords[i][1];
-  //   } 
-
-  //   var avgLat = sumLats/numCords;
-  //   var avgLong = sumLongs/numCords;
-
-  //   return [avgLat, avgLong];
-  // };
