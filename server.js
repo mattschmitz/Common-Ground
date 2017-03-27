@@ -133,3 +133,8 @@ app.get('/logout', function(req, res){
     })
   })
 
+  app.get('/geo', function(req, res) {
+    gHelpers.geocode({address: '944 Market St, San Francisco, CA 94102'}, function(data){
+      res.send(data);
+    })
+  })

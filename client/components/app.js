@@ -14,6 +14,15 @@ angular.module('etapartments')
   this.anchors = [];
   this.center = {};
   this.filteredList = [];
+  this.anchorMsg = 'Set Your Starting Point';
+
+  $scope.$watch('app.anchors', function() {
+    if (this.anchors.length > 0) {
+      this.anchorMsg = 'Add Another Starting Point';
+    } else {
+      this.anchorMsg = 'Set Your Starting Point';
+    }
+  }.bind(this));
 
   this.getYelpResults = function(term, price, rating, open, travel_time) {
     // Create object

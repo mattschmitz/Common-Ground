@@ -27,7 +27,16 @@ angular.module('etapartments')
   this.markers = [];
   this.anchorsList = [];
 
-  this.addPoints = function (map, locations){
+  this.createMarker = function(map, pos, icon) {
+    var marker = new $window.google.maps.Marker({
+      // marker.map sets which map to set marker on
+      // marker.position takes an object with lat, lng properties  
+      map: map, position: pos , icon: icon 
+    });
+    return marker;
+  }
+
+  this.addPoints = function (map, locations, index){
     // Clear markers array
     this.markers = [];
     
@@ -35,13 +44,28 @@ angular.module('etapartments')
     // Loop through all locations
     for (i = 0; i < locations.length; i++) {  
       // Create a new marker object
-
       var pos = {lat: locations[i].coordinates.latitude, lng: locations[i].coordinates.longitude}
-      var marker = new $window.google.maps.Marker({
-        // marker.map sets which map to set marker on
-        // marker.position takes an object with lat, lng properties  
-        map: map, position: pos , icon: '/client/images/marker.png' 
-      });
+      if (index === undefined) {
+        if (i < 3) {
+          marker = this.createMarker(map, pos, '/client/images/star.png');
+        } else {
+          marker = this.createMarker(map, pos, '/client/images/marker.png');
+        }
+      } else {
+        if (i < 3) {
+          if (i === index) {
+            marker = this.createMarker(map, pos, '/client/images/star.png');
+          } else {
+            marker = this.createMarker(map, pos, '/client/images/starsemi.png');
+          }
+        } else {
+          if (i === index) {
+            marker = this.createMarker(map, pos, '/client/images/marker.png');
+          } else {
+            marker = this.createMarker(map, pos, '/client/images/markersemi.png');
+          }
+        }
+      }
 
       // Store marker in markers array for later retrieval
       this.markers.push(marker);
@@ -75,11 +99,8 @@ angular.module('etapartments')
     // Loop through all anchors
     for (i = 0; i < anchors.length; i++) {  
       // Create a new marker object
-      var marker = new $window.google.maps.Marker({
-        // marker.map sets which map to set marker on
-        // marker.position takes an object with lat, lng properties  
-        map: map, position: {lat: anchors[i].coordinates.lat, lng: anchors[i].coordinates.lng}, icon: '/client/images/anchor.png'
-      });
+      var pos = {lat: anchors[i].coordinates.lat, lng: anchors[i].coordinates.lng};
+      marker = this.createMarker(map, pos, '/client/images/anchor.png');
 
       // Store marker in anchors array for later retrieval
       this.anchorsList.push(marker);
@@ -184,8 +205,22 @@ angular.module('etapartments')
 
     $scope.$on('showResultOnMap', function(event, index) {
       // This waits for a 'showResultOnMap' broadcast from app
-      // Once triggered, it will trigger a click event on the marker which will show the infowindow associated with that marker
-      $window.google.maps.event.trigger(this.markers[index], 'click');
+      // Once triggered, refresh all markers with a new icon except the one that was clicked
+        // If markers length > 0
+        if (this.markers.length > 0) {
+          // We need to delete markers
+          this.deleteMarkers(this.markers);
+          // Then recenter map accordingly
+          $scope.map.setCenter($scope.gmap.center)
+        }
+        this.addPoints($scope.map, $scope.gmap.results, index);
+        //adjust bounds when markers are added
+        if (this.markers.length > 0) {
+          $scope.map.fitBounds(this.bounds);
+          // Then trigger a click event on the marker which will show the infowindow associated with that marker
+          $window.google.maps.event.trigger(this.markers[index], 'click');
+        }
+
     }.bind(this));
 
   }.bind(this);
