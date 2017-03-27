@@ -29,24 +29,24 @@ exports.getResults = function(req, res){
   //     travel_time: 10 
   //   } 
   // }
-  yelp.getBusinesses(req.body.yelpParams, function(yelpResults) {
-    // Temporary work around
-    // res.send(yelpResults);
+  yelp.getBusinesses(req.body, function(yelpResults) {
     rankLocations(yelpResults, req.body.anchors, req.body.travelParams, function(rankedResults){
       res.send(rankedResults);
     });
   });
 }
 
+var anchors = [];
 
 exports.addAnchor = function(req, res) {
-  var fullAddress = req.body.address + ', ' + req.body.city + ', ' + req.body.state + ' ' + req.body.zip;
-  req.body.fullAddress = fullAddress;
-  req.body.splitAddress = [];
-  req.body.splitAddress.push(req.body.address);
-  req.body.splitAddress.push([req.body.city,req.body.state,req.body.zip].join(', '));
-  gHelpers.geocode({address: fullAddress}, function(coords) {
-    req.body.coordinates = coords;
+  var anchor = req.body[req.body.length - 1];
+  gHelpers.geocode({address: anchor.fullAddress}, function(coords) {
+    anchor.coordinates = coords;
+    req.body[req.body.length - 1] = anchor;
+    // setSearchArea should take an array, not single object
+    // TODO: get user's anchors from DB and add new anchor onto it
+    // yelp.setSearchArea should be the call back to the DB insert
+    // Currently using local, non-persistent storage at line 39
     yelp.setSearchArea(req.body, function(data) {
       res.send(data);
     });

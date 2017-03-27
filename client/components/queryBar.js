@@ -2,7 +2,8 @@ angular.module('etapartments')
 .directive('queryBar', function() {
   return {
     scope: {
-      getresults: '<'
+      getresults: '<',
+      filterresults: '<'
     },
     controllerAs: 'query',
     bindToController: true,

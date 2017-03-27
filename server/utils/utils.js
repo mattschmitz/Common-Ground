@@ -27,7 +27,7 @@ var findCentroid = function(coords){
   var avgLat = sumLats/numCords;
   var avgLong = sumLongs/numCords;
 
-  return [avgLat, avgLong];
+  return {lat: avgLat, lng: avgLong};
 };
 
 /* 
@@ -78,3 +78,4 @@ var haversine = function() {
 module.exports.getMaximumDist = getMaximumDist;
 module.exports.findCentroid = findCentroid;
 module.exports.secondsToString = secondsToString;
+module.exports.max = max;
