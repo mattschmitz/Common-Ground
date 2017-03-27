@@ -1,10 +1,12 @@
 angular.module('etapartments')
 .directive('userNav', function() {
 	return {
-    scope: {},
-    controllerAs: 'userNav',
-    bindToController: true,
-    controller: 'userNavCtrl',
+	    scope: {
+	    	loginuser: '<'
+	    },
+	    controllerAs: 'userNav',
+	    bindToController: true,
+	    controller: 'userNavCtrl',
 		templateUrl: 'client/htmlTemplates/userNav.html',
 	}
 })
@@ -13,10 +15,11 @@ angular.module('etapartments')
 	this.displaySignupMessage = false;
 	this.setLoginState = function(err, user) {
 		if (err) {
-			this.displaySignupMessage = false
 			this.displayLoginMessage = true;
+			this.displaySignupMessage = false
 		} else if (user) {
 			this.displayLoginMessage = false;
+			this.displaySignupMessage = false
 		}
 	}.bind(this);
 
@@ -26,6 +29,7 @@ angular.module('etapartments')
 			this.displayLoginMessage = false;
 		} else if (user) {
 			this.displaySignupMessage = false;
+			this.displayLoginMessage = false;
 		}
 	}.bind(this);
 
@@ -34,7 +38,7 @@ angular.module('etapartments')
 			username: this.username,
 			password: this.password
 		};
-		auth.logIn(user, this.setLoginState);
+		this.loginuser(user, this.setLoginState);
 	};
 	this.logOut = function() {
 		auth.logOut();

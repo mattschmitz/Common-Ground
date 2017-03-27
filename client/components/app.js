@@ -9,7 +9,7 @@ angular.module('etapartments')
 	}
 })
 
-.controller('AppCtrl', function($scope, $window, $timeout, search) {
+.controller('AppCtrl', function($scope, $window, $timeout, search, auth, $q) {
   this.list = [];
   this.anchors = [];
   this.center = {};
@@ -84,6 +84,21 @@ angular.module('etapartments')
   this.deleteAnchor = function(index) {
     this.anchors.splice(index,1);
   }.bind(this);
+
+  this.logInUser = function(user, callback) {
+    $q(function(resolve, reject){
+      auth.logIn(user, function(error, results) {
+        if(error){
+          reject(error)
+        } else {
+          resolve(results)
+        }
+      })
+    }).then(function(results) {
+      this.anchors = results.data;
+      callback()
+    }.bind(this))
+  }.bind(this)
 
   $scope.$on('showResult', function(event, index) {
     // Waits for an emit from resultsEntry with the index

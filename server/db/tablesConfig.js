@@ -26,7 +26,8 @@ module.exports = function (db) {
 				travel_mode VARCHAR(25), \
 				anchor_name VARCHAR(255), \
 				anchor_coordinates VARCHAR(255), \
-				anchor_address VARCHAR(255) \
+				anchor_address VARCHAR(255), \
+				anchor_splitAddress VARCHAR(255) [] \
 				); \
 			')
 	})

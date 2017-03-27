@@ -6,7 +6,6 @@ angular.module('etapartments')
       callback(null, data);
     })
     .catch(function(err) {
-      console.log(err, 'login data!')
     	callback(err, null);
     })
   };
@@ -21,7 +20,6 @@ angular.module('etapartments')
       callback(null, data);
     })
     .catch(function(err) {
-      console.log(err, 'login data!')
       callback(err, null);
     })
   };

@@ -47,29 +47,37 @@ exports.addAnchor = function(req, res) {
     req.body[req.body.length - 1] = anchor;
     // setSearchArea should take an array, not single object
     // TODO: get user's anchors from DB and add new anchor onto it
-    // yelp.setSearchArea should be the call back to the DB insert
-    // Currently using local, non-persistent storage at line 39
-    yelp.setSearchArea(req.body, function(data) {
-      res.send(data);
-    });
+
+    console.log(anchor.splitAddress, 'anchor.splitAddress')
+    if(req.user){
+      anchorsDb.storeAnchor(req.user, anchor.name, anchor.coordinates, anchor.fullAddress, anchor.splitAddress, anchor.travel_mode).then(function(result) {
+        anchor.rowId = result[0].id;
+        // yelp.setSearchArea should be the call back to the DB insert
+        // Currently using local, non-persistent storage at line 39
+        yelp.setSearchArea(req.body, function(data) {
+          res.send(data);
+        });
+      })
+    } else {
+      yelp.setSearchArea(req.body, function(data) {
+        res.send(data);
+      });
+    };
   })
 }
 
 exports.loadAnchors = function (req, res, next) {
   anchorsDb.findById_Anchors(req.user).then(function(results) {
   var anchorsList = [];
-
   if(req.user) {
     results.forEach(function(anchor) {
-      var splitAddress = anchor.anchor_address.split('/?><');
-      var firstLine = splitAddress[0] + ', ';
-      var secondLine = splitAddress[1] + ', ' + splitAddress[2] + ' ' + splitAddress[3];
-
+      console.log(anchor, 'anchor')
       var anchor = {
         name: anchor.anchor_name,
-        coordinates: JSON.parse(results[0].anchor_coordinates),
-        splitAddress: [firstLine, secondLine],
-        travel_mode: anchor.travel_mode
+        coordinates: JSON.parse(anchor.anchor_coordinates),
+        splitAddress: anchor.anchor_splitaddress,
+        travel_mode: anchor.travel_mode,
+        rowId: anchor.id
       }
 
       anchorsList.push(anchor);
