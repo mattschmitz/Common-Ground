@@ -18,7 +18,7 @@ var app = express();
 var port = process.env.PORT || 8080;
 
 //serve static files:
-// app.use('/', express.static(path.join(__dirname)));
+app.use('/', express.static(path.join(__dirname)));
 app.use('/htmlTemplates', express.static(path.join(__dirname, '/htmlTemplates')));
 app.use('/server', express.static(path.join(__dirname, '/server')));
 app.use('/config', express.static(path.join(__dirname, '/config')));
