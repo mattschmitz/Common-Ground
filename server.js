@@ -25,7 +25,7 @@ app.use('/config', express.static(path.join(__dirname, '/config')));
 
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(session({secret: 'keyboard cat'}));
 
