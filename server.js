@@ -15,11 +15,14 @@ var anchorsDb = require('./server/db/Models/anchors')
 
 process.stdout.write('Here in server.js funny name!');
 
-app.use(function(req, res, next) {
-  process.stdout.write('before auth req.url: ', req.url);
-})
+
 
 var app = express();
+
+app.use(function(req, res, next) {
+  process.stdout.write('before auth req.url: ' + req.url + '\n');
+  next();
+})
 
 var port = process.env.PORT || 8080;
 
@@ -41,7 +44,8 @@ app.use(flash());
 
 
 app.use(function(req, res, next) {
-  process.stdout.write('req.url: ', req.url);
+  process.stdout.write('req.url: ' + req.url + '\n');
+  next();
 })
 
 app.get('/testing', function(req, res) {
