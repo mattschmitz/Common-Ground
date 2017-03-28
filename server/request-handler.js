@@ -41,6 +41,8 @@ exports.getResults = function(req, res){
 var anchors = [];
 
 exports.addAnchor = function(req, res) {
+  console.log('hellow m herr');
+  process.stdout.write('Here in server!');
   var anchor = req.body[req.body.length - 1];
   gHelpers.geocode({address: anchor.fullAddress}, function(coords) {
     anchor.coordinates = coords;

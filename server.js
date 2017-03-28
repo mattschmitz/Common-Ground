@@ -13,6 +13,12 @@ var flash = require('connect-flash');
 var authUsers = require('./server/db/Models/users')
 var anchorsDb = require('./server/db/Models/anchors')
 
+process.stdout.write('Here in server.js funny name!');
+
+app.use(function(req, res, next) {
+  process.stdout.write('before auth req.url: ', req.url);
+})
+
 var app = express();
 
 var port = process.env.PORT || 8080;
@@ -34,8 +40,13 @@ app.use(passport.session());
 app.use(flash());
 
 
+app.use(function(req, res, next) {
+  process.stdout.write('req.url: ', req.url);
+})
 
-
+app.get('/testing', function(req, res) {
+  res.status(200).send();
+})
 //dummy strategy
 //if username is tyler, successful login
 //else unsuccessful
