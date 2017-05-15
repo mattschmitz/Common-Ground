@@ -1,6 +1,6 @@
 # Common Ground
 
- Want to meet up with friends after work, but can't find a good spot that's easy for everyone to get to? Common Ground finds optimal meeting places based on travel times. Simply enter your starting locations and a desired type of meeting place - for example 'bars' or 'german restaurants'. You can even select different travel modes for each person - walk, bike, drive or transit. 
+ Want to meet up with friends after work, but can't find a good spot that's easy for everyone to get to? Common Ground locates optimal meeting places based on travel times. Simply enter your starting locations and a desired type of meeting place - for example 'bars' or 'german restaurants'. You can even select different travel modes for each person - walk, bike, drive or transit. 
 
  [Live Site](https://findcommonground.herokuapp.com/)
 
