@@ -1,6 +1,8 @@
-# ETAparments
+# Common Ground
 
-> Find apartments based on time-to-travel to destinations important to you!
+ Meetingplace locator built to optimize travel times
+
+ [Live Site](https://findcommonground.herokuapp.com/)
 
 ## Team
 
@@ -11,43 +13,37 @@
 
 ## Table of Contents
 
-1. [Usage](#Usage)
-1. [Requirements](#requirements)
 1. [Development](#development)
+    1. [Requirements](#requirements)
     1. [Installing Dependencies](#installing-dependencies)
-    1. [Tasks](#tasks)
-1. [Roadmap](#roadmap)
 1. [Contributing](#contributing)
-
-## Usage
-
-> Some usage instructions
-
-## Requirements
-
-- Node 6.4.x
-- Redis 2.6.x
-- Postgresql 9.1.x
-- etc
-- etc
+1. [Testing](#testing)
+1. [License](#license)
 
 ## Development
+
+### Requirements
+
+- Node 6.4.x
 
 ### Installing Dependencies
 
 From within the root directory:
-
-```sh
-npm install -g bower
-npm install
-bower install
 ```
-
-### Roadmap
-
-View the project roadmap [here](LINK_TO_DOC)
-
+npm install
+```
 
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+## Testing
+
+From within the root directory:
+```
+npm test
+```
+
+## License
+
+MIT
