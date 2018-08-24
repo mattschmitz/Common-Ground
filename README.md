@@ -6,14 +6,6 @@
  
  ![Screenshot](screenshots/screenshot-3-anchors.png "screenshot")
 
-
-## Team
-
-  - Justin Yoo (justinjyoo)
-  - Matt Schmitz (mattschmitz)
-  - Tyler Walker (twalk4821)
-  - Innie Kim (ijongkim)
-
 ## Table of Contents
 
 1. [Development](#development)
